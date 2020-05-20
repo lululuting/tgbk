@@ -7,7 +7,7 @@ tgbk 项目为 `前台主站` `后台管理系统`还有`api服务` 这个三个
 里面bug还有很多，响应式也还没有做全，喜欢就点个sart，后续慢慢迭代。
 
 ## 前台主站
-![avatar](http://cdn.lululuting.com/8014c580-9a44-11ea-bd4b-9126d2734d3a)
+![avatar](https://github.com/lululuting/pic/blob/master/preview/%E5%89%8D%E5%8F%B0.png?raw=true)
 
 前台项目 技术栈为 `react` + `nextJS` + `react-redux` ssr服务端渲染
 静态资源 采用 `七牛云cdn`进行加速
