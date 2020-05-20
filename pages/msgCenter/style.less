@@ -1,0 +1,38 @@
+.banner {
+    margin: 10px 0 24px;
+    height: 150px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.msg-page {
+    margin-bottom: 100px;
+
+    .left-nav-box {
+        .left-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                padding: 12px 20px;
+                transition: all .3s;
+                cursor: pointer;
+
+                // margin: 10px 0;
+                &:hover {
+                    border-radius: 2px;
+                    background: #e6f7ff;
+                    border-color: #91d5ff;
+                    color: @primary-color;
+                }
+            }
+
+            .active {
+                border-radius: 2px;
+                background: #e6f7ff;
+                border-color: #91d5ff;
+                color: @primary-color;
+            }
+        }
+    }
+}

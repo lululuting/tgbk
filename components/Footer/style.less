@@ -1,0 +1,51 @@
+.footer {
+  width: 100%;
+  background-color: #000;
+
+  .footer-box {
+    color: #777;
+    letter-spacing: 2px;
+
+    .logo {
+      width: 60px;
+    }
+
+    .anticon-heart{
+      color: red;
+      animation: rotate1 .5s linear infinite;
+    }
+
+    .beian-a{
+      color: #777;
+      margin-left: 20px;
+      &:hover {
+        color: #999;
+
+      }
+    }
+  }
+}
+
+
+@keyframes rotate1 {
+  0% {
+    transform: translateY(0);
+  }
+
+  25% {
+    transform: translateY(2px);
+  }
+
+  50% {
+    transform: translateY(4px) scale(1.1, 0.9);
+
+  }
+
+  75% {
+    ransform: translateY(2px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
