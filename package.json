@@ -25,7 +25,7 @@
     "marked": "^0.8.0",
     "mini-css-extract-plugin": "^0.9.0",
     "moment": "^2.24.0",
-    "next": "9.1.6",
+    "next": "9.3.2",
     "next-compose-plugins": "^2.2.0",
     "nprogress": "^0.2.0",
     "qiniu": "^7.3.0",
