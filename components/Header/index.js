@@ -125,6 +125,25 @@ const Header = (props) => {
 		Router.replace('/')
 	}
 
+
+	const linkUser = (id) => {
+
+		// 重复路由的处理 不是很优雅
+ 		if(props.router.pathname === '/userCenter'){
+			Router.push({
+				pathname: '/userCenter',
+				query: { id }
+			}).then(()=>{
+				Router.reload()
+			})
+		}
+
+		Router.push({
+			pathname: '/userCenter',
+			query: { id }
+		})
+	}
+
 	return (
 		<div className={classnames({ 'header': true, 'homeHeader': isHome, 'scrollActive': scrollActive })}>
 			<Row className={classnames('wrap header-box')} type="flex" align="middle" justify="space-between">
@@ -178,10 +197,7 @@ const Header = (props) => {
 
 
 									<ul className="user-options">
-										<li onClick={() => Router.push({
-											  pathname: '/userCenter',
-											  query: { id: userInfo.userId }
-										})}>
+										<li onClick={ ()=>linkUser(userInfo.userId)}>
 											<Icon type="user" /> 个人中心
 										</li>
 

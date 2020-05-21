@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-18 21:17:27
  * @LastEditors: 挺哥
- * @LastEditTime: 2020-05-18 00:44:49
+ * @LastEditTime: 2020-05-20 22:28:07
  * @FilePath: \ting_ge_blog\pages\userCenter\index.js
  */
 
@@ -10,6 +10,7 @@ import Head from '@/components/Head'
 import Router,{withRouter} from 'next/router'
 import { Row, Col, Card, Button, Icon, message, Upload, Form, Input, Modal, Avatar, Divider, Typography, Spin, Tooltip } from 'antd'
 import classnames from 'classnames'
+import store from 'store'
 import request from '@/public/utils/request'
 import serviceApi from '@/config/service'
 import ArticeList from '@/components/ArticeList'
@@ -159,10 +160,11 @@ const UserCenter = (props) => {
 
   useEffect(() => {
     getUserInfo()
+    console.log(props.uploadQiniuLoading)
   }, [])
 
   // 查询用户信息
-  const getUserInfo = () =>{
+  const getUserInfo = (callback) =>{
     request(serviceApi.getUserInfo, {
       method: 'get',
       params: {
@@ -171,6 +173,10 @@ const UserCenter = (props) => {
     }).then((res) => {
       if(res && res.code == 200){
         setUserInfo(res.data)
+
+        // 有回调则回调
+        callback && callback(res.data)
+        
         if (res.data.status && res.data.status === '0') {
           setFollowStatus(true)
         }
@@ -206,14 +212,22 @@ const UserCenter = (props) => {
 
     reader.addEventListener('load', res => {
       setUpdateAvatarFile(file)
-      callback();
+      callback(file);
     });
     return false;
   };
 
+
+  //上传头像图片方法
+  const changeupload = (file) => {
+    uploadQiniu(file, (res)=>{
+      updateUserInfo({ avatar: res })
+    })
+  };
+  
   //上传用户封面图片方法
-  const changeuploadCover = () => {
-    uploadQiniu(updateAvatarFile, (res) => {
+  const changeuploadCover = (file) => {
+    uploadQiniu(file, (res) => {
       updateUserInfo({ cover: res })
     })
   };
@@ -225,7 +239,12 @@ const UserCenter = (props) => {
       data: params
     }).then((res) => {
       if (res.code == 200) {
-        getUserInfo()
+        getUserInfo((res)=>{
+          let userInfo = store.get('userInfo')
+          userInfo = Object.assign(userInfo, res)
+          store.set('userInfo', userInfo)
+          props.userInfoChange(userInfo)
+        })
         message.success('操作成功！')
       }
     })
@@ -298,7 +317,7 @@ const UserCenter = (props) => {
                         className="avatar-uploader"
                         showUploadList={false}
                         beforeUpload={(file, fileList) => handleImgBeforeUpload(file, fileList, changeuploadCover)}
-                        disabled={props.updateUserInfoLoading}
+                        disabled={props.uploadQiniuLoading}
                         accept="image/*"
                       >
                         修改封面
@@ -342,7 +361,7 @@ const UserCenter = (props) => {
               }
 
               <div className="avatar-holder">
-                {props.updateUserInfoLoading && <Spin size="large" className="update-loading" />}
+                {props.uploadQiniuLoading && <Spin size="large" className="update-loading" />}
                 <Avatar size={100} src={userInfo && userInfo.avatar} style={{ color: '#fff', backgroundColor: '#fff' }}>
                   {userInfo && userInfo.userName}
                 </Avatar>
@@ -351,11 +370,11 @@ const UserCenter = (props) => {
                   className="avatar-uploader"
                   showUploadList={false}
                   beforeUpload={(file, fileList) => handleImgBeforeUpload(file, fileList, changeupload)}
-                  disabled={props.updateUserInfoLoading || !settingStatus}
+                  disabled={props.uploadQiniuLoading || !settingStatus}
                   accept="image/*"
                 >
                   {
-                    settingStatus &&
+                    settingStatus && !props.uploadQiniuLoading &&
                     <>
                       <Icon type="upload" style={{ marginRight: 5 }} />
                       更改头像
@@ -577,6 +596,7 @@ const stateToProps = (state) => {
     updateUserInfoLoading: state.updateUserInfoLoading,
     updatePasswordLoading: state.updatePasswordLoading,
     updateMobileLoading: state.updateMobileLoading,
+    uploadQiniuLoading: state.getQiniuTokenLoading || state.uploadQiniuLoading
   }
 }
 

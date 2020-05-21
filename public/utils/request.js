@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-04-09 23:43:42
  * @LastEditors: 挺哥
- * @LastEditTime: 2020-05-19 22:19:46
+ * @LastEditTime: 2020-05-20 21:42:46
  * @FilePath: \ting_ge_blog\public\utils\request.js
  */
 /**
@@ -84,6 +84,21 @@ const request = extend({
  * 配合redux 处理loading
  */
 const setLoading = (url, status) => {
+
+
+  // 特殊处理第三方七牛云上传的的接口
+  if(url === "http://upload-z2.qiniup.com" || url === "http://upload-z2.qiniup.com/"){
+    store.dispatch({
+      type: 'changeLoading',
+      payload: {
+        api: 'uploadQiniuLoading',
+        status
+      }
+    })
+    return
+  }
+
+
   // 默认是以default开头的才算api请求
   if (url.indexOf("default") != -1) {
     let api = url.substring(url.lastIndexOf("\/") + 1, url.length)
@@ -94,6 +109,7 @@ const setLoading = (url, status) => {
       api = api + "Loading";
     }
     
+  
     store.dispatch({
       type: 'changeLoading',
       payload: {

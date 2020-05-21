@@ -34,6 +34,7 @@
     "react-katex": "^2.0.2",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
+    "store": "^2.0.12",
     "umi-request": "^1.2.17",
     "webpack-filter-warnings-plugin": "^1.2.1"
   },
