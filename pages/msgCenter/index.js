@@ -89,6 +89,8 @@ const MsgPage = (props) => {
 				</div>
 
 				<Row className="msg-page">
+
+					{/* 这里分两份代码 pc 和移动 这样子最省事 */}
 					<Col xs={0} sm={0} md={0} lg={5} xl={5} className="left-nav-box" style={{ paddingRight: 24 }}>
 						<Affix offsetTop={68}>
 							<Card bordered={false}>
@@ -105,11 +107,30 @@ const MsgPage = (props) => {
 						</Affix>
 					</Col>
 
+					{/* 移动端不用固定 */}
+					<Col xs={24} sm={24} md={0} lg={0} xl={0} className="left-nav-box" >
+						<Card
+							style={{ marginBottom: 20 }}
+							bordered={false}
+						>
+							<ul className="left-nav-list">
+									{
+										navData.map(item => (
+											<li key={item.key} className={tabKey == item.key ? 'active' : ''} onClick={() => tabKeyChang(item.key)}>
+												<Icon type={item.icon} /> {item.text}
+											</li>
+										))
+									}
+								</ul>
+						</Card>
+					</Col>
+
+
 					{/* 列表 */}
 					<Col id='left-box' xs={24} sm={24} md={24} lg={19} xl={19} >
 						<div className={classnames('data-list')}>
 							<Card
-								bordered={false}
+								bordered={false} 
 								title={
 									<>
 										<Icon type={formatTitle(tabKey).icon} className="search-result-icon" style={{ color: '#1890ff', marginRight: 10 }} />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect  } from 'react'
 import './style.less'
 import classnames from 'classnames'
-import { Row, Col, Menu, Icon, Drawer, Input, Avatar, Badge, message } from 'antd'
+import { Row, Col, Menu, Icon, Drawer, Input, Avatar, Badge, message, Dropdown } from 'antd'
 import Link from 'next/link'
 import Router, {withRouter} from 'next/router'
 import request from '@/public/utils/request'
@@ -144,6 +144,8 @@ const Header = (props) => {
 		})
 	}
 
+
+
 	return (
 		<div className={classnames({ 'header': true, 'homeHeader': isHome, 'scrollActive': scrollActive })}>
 			<Row className={classnames('wrap header-box')} type="flex" align="middle" justify="space-between">
@@ -262,8 +264,56 @@ const Header = (props) => {
 				</Col>
 
 				{/* 移动端 menu */}
-				<div className="xs-menu">
-					<Icon style={{ fontSize: 20 }} type="menu" onClick={() => setMuneVisible(true)} />
+				<div className="xs-menu" id="xs-menu">
+				{
+					userInfo && userInfo.userId ?
+					<Dropdown 
+						getPopupContainer={() => document.getElementById('xs-menu')} 
+						placement="bottomRight" 
+						trigger={['click']} 
+						overlayStyle={{width: '100%',left: 0}}
+						overlay={
+							<ul className="user-options">
+								<li onClick={ ()=>linkUser(userInfo.userId)}>
+									<Icon type="user" /> 个人中心
+								</li>
+
+								<li className="user-msg" onClick={() => Router.push(`/msgCenter`)} >
+									<Icon type="bell" /> 我的信息
+
+									<span className="msg-num">
+										<Badge
+											count={msgData && msgData.length}
+											style={{ backgroundColor: 'rgba(245,34,45,.2)', color: 'red', boxShadow: 'none' }}
+										/>
+									</span>
+								</li>
+
+								<li onClick={logout}>
+									<Icon type="poweroff" /> 退出
+								</li>
+							</ul>
+					}>
+						<Badge dot={msgData && msgData.length ? true : false}>
+							<Avatar className="user-avatar" src={userInfo && userInfo.avatar} />
+						</Badge>
+
+					</Dropdown>:null
+				}
+
+
+				{
+						userInfo && userInfo.userId ?
+						null
+						:
+						<div key="2" className="writing" onClick={showLogin}>
+							<Icon type="mobile" theme="twoTone" style={{ fontSize: 18, marginRight: 5,marginTop: 2 }} />
+							登录
+						</div>
+				
+				}
+				<Icon style={{ fontSize: 20,marginLeft: 20 }} type="menu" onClick={() => setMuneVisible(true)} />
+
 				</div>
 
 				{/* 目录 */}
