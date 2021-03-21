@@ -6,7 +6,7 @@ tgbk 项目为 `前台主站` `后台管理系统`还有`api接口服务` 这个
 
 ## 前台主站
 
-![avatar](https://github.com/lululuting/pic/blob/master/preview/%E5%89%8D%E5%8F%B0.png?raw=true)
+![cover](http://cdn.lululuting.com/upic/WX20210321-182555@2x.png)
 
 前台项目 技术栈为 `react` + `antd` + `next` + `react-redux` ssr 服务端渲染
 静态资源 采用 `七牛云cdn`进行加速
@@ -65,7 +65,6 @@ tgbk 项目为 `前台主站` `后台管理系统`还有`api接口服务` 这个
 │  │      modifyVars.less // 主题配置
 │  │
 │  └─utils
-│          autorender.js // md公式渲染js
 │          request.js // umi-request 请求库
 │          uploadQiniu.js // 上传牛云方法
 │          utils.js // 公共类库
@@ -80,11 +79,12 @@ tgbk 项目为 `前台主站` `后台管理系统`还有`api接口服务` 这个
 .babelrc
 .gitignore
 next.config.js // 配置文件
-package-lock.json
 package.json
 README.en.md
 README.md
 uploadCnd.js // 打包后一健上传七牛云 配好参数打包后 npm run cdn
+deploy.js // 自动化部署插件配置
+tsconfig.json // ts配置文件
 ```
 
 ### 运行
