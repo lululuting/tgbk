@@ -1,0 +1,37 @@
+#side {
+    position: fixed;
+    bottom: 10%;
+    // right: 100px;
+    margin-left: 1220px;
+    z-index: 999;
+
+    .ant-back-top {
+        position: initial;
+    }
+
+    .action-btn {
+        width: 40px;
+        height: 40px;
+        background: #fff;
+        margin-top: 10px;
+        border-radius: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // box-shadow: 0 2px 20px 0 rgba(18, 141, 244, 0.08);
+        position: relative;
+        transition: all .3s;
+
+        &:hover {
+            color: @primary-color;
+            background: #e6f7ff;
+        }
+    }
+
+    .hideform {
+        position: absolute;
+        left: -360px;
+        top: -226px;
+        background: #fff;
+    }
+}

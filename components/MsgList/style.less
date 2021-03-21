@@ -1,0 +1,94 @@
+.msg-list {
+    .msg-item {
+        display: flex;
+        transition: all .3s;
+        cursor: pointer;
+        padding: 0 10px;
+
+        &:hover {
+            background-color: #f5f7fa;
+            border-radius: 0px;
+        }
+
+        &:hover .right-box .text-box .action-box .action{
+            display: inline-block;
+        }
+        &:hover .right-box{
+            border-color: transparent;
+        }
+        &:hover  + .msg-item .right-box{
+            border-color: transparent;
+        }
+        
+
+        .left-box {
+            display: flex;
+            padding-top: 10px;
+        }
+
+        .right-box {
+            flex: 1;
+            display: flex;
+            padding:10px 0;
+            border-top: 1px solid #e8e8e8;
+
+            .text-box {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .msg-content{
+                    .title {
+                        margin-bottom: 10px;
+    
+                        .user-name {
+                            color: #333;
+                            font-weight: bold;
+                            margin-right: 10px;
+    
+                            &:hover {
+                                color: @primary-color;
+                            }
+                        }
+                    }
+    
+                    .content {
+                        margin-bottom: 10px;
+                    }
+    
+                }
+
+                .action-box {
+                    color: #999;
+
+                    .time {
+                        color: #999;
+                    }
+                    .action{
+                        display: none;
+                        margin-left: 20px;
+                        &:hover{
+                            color: #666;
+                        }
+                    }
+                }
+
+            }
+            .source{
+                width: 150px;
+                min-height: 52px;
+                color: #999;
+                padding-left: 20px;
+                text-align: right;
+            }
+
+        }
+
+    }
+
+    .msg-item:first-child .right-box{
+        border-top: 0;
+    }
+
+}

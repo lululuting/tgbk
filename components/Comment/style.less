@@ -1,0 +1,81 @@
+.comment-box {
+    padding: 48px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+
+
+    .reply-editor-box {
+        display: flex;
+        margin-top: 10px;
+
+        .reply-btn {
+            margin-left: 10px;
+        }
+    }
+
+    .login-tips-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 50px;
+
+        .login-tips {
+            height: 40px;
+            line-height: 40px;
+            display: inline-block;
+            border-radius: 0px;
+            padding: 0 20px;
+            background-color: #f5f7fa;
+            margin-left: 20px;
+        }
+    }
+
+    .editor-textarea{
+        width: 100%;
+        outline: none;
+        border: 1px solid #ccc;
+        border-radius: 0px;
+        padding: 10px;
+        line-height: 1.3;
+    }
+
+    .action-box{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .ant-comment-nested{
+        padding: 0 15px;
+        background-color: #f5f7fa;
+        border-radius: 0px;
+    }
+
+    .verify-box{
+        width: 210px;
+        display: flex;
+        justify-content: space-between;         
+    }
+}
+
+.emoji-box {
+    .emoji-mart-bar{
+        display: none !important;
+    }
+
+    .emoji-mart-search{
+        display: none !important;
+    }
+}
+
+
+@media screen and (max-width: @screen-lg) {}
+
+@media screen and (max-width: @screen-md) {
+    .comment-box {
+        padding: 0 !important;
+    }
+}

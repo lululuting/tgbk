@@ -1,0 +1,90 @@
+.banner {
+  margin: 10px 0 24px;
+  height: 150px;
+  border-radius: 0px;
+  overflow: hidden;
+}
+
+#left-box {
+  .list-nav {
+    background: #ffffff;
+    border-radius: 0px;
+    overflow: hidden;
+    // box-shadow: 0 2px 20px 0 rgba(18, 141, 244, 0.08);
+
+    .ant-card-head {
+      padding: 20px;
+      border-bottom: none;
+    }
+
+    .ant-list-vertical .ant-list-item-meta {
+      margin-bottom: 0;
+    }
+
+    .ant-tabs .ant-tabs-large-bar .ant-tabs-tab {
+      padding: 16px 5px;
+    }
+
+    .ant-tabs-ink-bar {
+      height: 0;
+    }
+
+    .ant-tabs-nav .ant-tabs-tab-active {
+      font-weight: bold;
+    }
+    .switch-btn{
+      cursor: pointer;
+      transition: all .3s;
+      &:hover {
+        color: @secondary-color;
+      }
+    }
+  }
+}
+
+.advert-list .ant-card {
+  // box-shadow: 0 2px 20px 0 rgba(18, 141, 244, 0.08);
+}
+
+@media screen and (max-width: @screen-lg) {
+  .banner {
+    margin: 8px auto 24px !important;
+    padding: 0 24px !important;
+
+    .item-background {
+      border-radius: 0px;
+    }
+  }
+
+  #left-box {
+    padding: 0 24px !important;
+  }
+}
+
+@media screen and (max-width: @screen-md) {
+  .banner {
+    margin: 0 auto 15px !important;
+    padding: 0 15px !important;
+
+    .item-background {
+      border-radius: 0px;
+    }
+  }
+
+  #left-box {
+    padding: 0 15px !important;
+
+    .ant-card-body {
+      padding: 0 !important;
+    }
+  }
+
+}
+
+
+
+@media screen and (max-width: @screen-sm) {}
+
+
+
+@media screen and (max-width: @screen-xs) {}
