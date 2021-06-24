@@ -1,7 +1,7 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-15 10:35:31
- * @LastEditTime: 2021-03-01 22:16:56
+ * @LastEditTime: 2021-06-04 21:30:39
  * @LastEditors: TingGe
  * @Description: 首页
  * @FilePath: /ting_ge_blog/pages/index.jsx
@@ -176,7 +176,7 @@ const Home = (props) => {
           <Col xs={24} sm={24} md={7} className="right">
             <For each="item" of={rightBanner}>
               <a key={index} className={classnames("img-focus banner-item ")} target="_blank" href={item.link}>
-                <LazyImg background src={item.url} params="?imageView2/1/w/350/h/190" alt={item.title} />
+                <LazyImg src={item.url} params="?imageView2/1/w/350/h/190" alt={item.title} />
                 <span className="banner-text">{item.title}</span>
               </a>
             </For>
@@ -214,7 +214,9 @@ const Home = (props) => {
                   bordered={false}
                 >
                   <p style={{ fontWeight: 'bold' }}>每日一句</p>
-                  <LazyImg src={energyData.imgurl} />
+                  <div style={{minHeight: 120}}>
+                    <LazyImg src={energyData.imgurl} />
+                  </div>
                   <div style={{ textIndent: '2em', marginTop: 10 }}>{energyData.ciba}</div>
                 </Card>
               </If>
@@ -239,7 +241,7 @@ const Home = (props) => {
                   key={item.id}
                 >
                   <p style={{ fontWeight: 'bold' }}>广告</p>
-                  <a href={item.link}>
+                  <a href={item.link} style={{minHeight: 120, display: 'block'}}>
                     <LazyImg src={item.url} params="?imageslim" />
                   </a>
                 </Card>

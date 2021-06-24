@@ -1,31 +1,108 @@
 .footer {
   width: 100%;
-  background-color: #000;
+  background-color: #2a2a32;
 
   .footer-box {
     color: #777;
     letter-spacing: 2px;
+    font-size: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
 
     .logo {
-      width: 60px;
+      width: 42px;
+      background-color: #fff;
+      border-radius: 5px;
     }
 
-    .anticon-heart{
-      color: red;
-      animation: rotate1 .5s linear infinite;
+    .right-memu {
+      background-color: #000;
+      padding: 5px;
+      border-radius: 3px;
+      transition: all .2s;
+      margin-left: 10px;
     }
 
-    .beian-a{
+    .beian-a {
       color: #777;
-      margin-left: 20px;
       &:hover {
         color: #999;
+      }
+    }
+  }
 
+  .tools-box {
+    .tool-list {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 80px;
+      overflow: hidden;
+      width: 900px;
+
+      .tool-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        transition: all 0.3s;
+
+        .tool-icon {
+          width: 30px;
+          height: 30px;
+          display: inline-block;
+          background-size: cover;
+        }
+
+        .tool-desc {
+          position: relative;
+          overflow: hidden;
+
+          .hide-desc {
+            opacity: 0;
+            width: 0;
+            height: 120px;
+            transition: all 0.3s;
+          }
+
+          .inner {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 200px;
+            color: #fff;
+            padding: 24px 20px;
+            opacity: 0;
+            transition: all 0.3s;
+
+            .name {
+              font-weight: bold;
+              font-size: 14px;
+              margin: 4px 0 2px;
+            }
+
+            .describe {
+              font-size: 12px;
+              margin: 0;
+            }
+          }
+        }
+
+        &:hover .hide-desc {
+          width: 200px;
+          opacity: 1;
+        }
+
+        &:hover .inner {
+          opacity: 1;
+        }
       }
     }
   }
 }
-
 
 @keyframes rotate1 {
   0% {
@@ -38,7 +115,6 @@
 
   50% {
     transform: translateY(4px) scale(1.1, 0.9);
-
   }
 
   75% {
@@ -47,5 +123,12 @@
 
   100% {
     transform: translateY(0);
+  }
+}
+
+
+@media screen and (max-width: @screen-lg) {
+  .footer{
+    display: none !important;
   }
 }

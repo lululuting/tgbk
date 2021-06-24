@@ -1,7 +1,7 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-15 10:35:31
- * @LastEditTime: 2021-02-07 00:11:16
+ * @LastEditTime: 2021-05-20 16:38:22
  * @LastEditors: TingGe
  * @Description: 入口
  * @FilePath: /ting_ge_blog/pages/_app.js
@@ -48,15 +48,6 @@ export default class MyApp extends App {
 		`);
 		console.log('\n' + ' %c 网站已开源，详情请移步 %c https://github.com/lululuting/tgbk ' + '\n', 'color: #1890ff; background: rgba(18, 141, 244, 0.1); padding:5px 0;', 'background: rgba(216, 32, 42, 0.1); padding:5px 0;');
 		
-        // 百度统计
-		var _hmt = _hmt || [];
-		(function () {
-			var hm = document.createElement("script");
-			hm.src = "https://hm.baidu.com/hm.js?8012cc8247fdc399904b23b2e8cb2266";
-			var s = document.getElementsByTagName("script")[0];
-			s.parentNode.insertBefore(hm, s);
-		})();
-
         // 点击 核心价值观
 		let index = 0;
 		const fnTextPopup = (event) => {
@@ -94,7 +85,6 @@ export default class MyApp extends App {
 		};
 
 		document.documentElement.addEventListener('click', fnTextPopup, false)
-
 
 		// 轮询消息 头一次查的比较快，后面为一分钟查询一次
 		setTimeout(() => {
@@ -137,11 +127,6 @@ export default class MyApp extends App {
 
 Router.events.on('routeChangeStart', (...args) => {
     NProgress.start();
-
-    // 百度统计
-	window._hmt.push(['_trackPageview',  location.pathname]);
-	
-
 })
 
 Router.events.on('routeChangeComplete', (...args) => {

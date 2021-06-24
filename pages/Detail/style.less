@@ -240,11 +240,17 @@
           align-items: center;
           cursor: pointer;
           position: relative;
-          transition: all .3s;
+          transition: all 0.3s;
           flex: 1;
           overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
+
+          & span {
+            display: inline-block;
+            width: 200px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
 
           &:hover {
             color: #1890ff !important;
@@ -307,6 +313,10 @@
 
   #preview {
     font-size: 14px;
+    
+    p{
+      line-height: 1.8;
+    }
 
     .vditor-copy span {
       top: -22px;
@@ -335,7 +345,7 @@
 
     code {
       border-radius: 0px !important;
-      
+
     }
 
     pre:before {

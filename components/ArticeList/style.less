@@ -6,21 +6,18 @@
     margin-bottom: 15px !important;
   }
 
-
   .ant-list-item-action {
     margin-top: 10px !important;
 
-    &>li {
+    & > li {
       padding: 0 14px;
     }
   }
 
-
-
   .ant-list-item {
     padding: 20px !important;
     margin-bottom: 10px;
-    transition: all .2s;
+    transition: all 0.2s;
     border-radius: 0px;
     position: relative;
     flex-flow: row-reverse;
@@ -45,7 +42,7 @@
       border: 1px solid #f2f2f2;
       color: #555;
       cursor: pointer;
-      transition: all .3s;
+      transition: all 0.3s;
       margin-right: 15px;
       margin-bottom: 15px;
       line-height: 24px;
@@ -65,7 +62,6 @@
     }
   }
 
-
   .item-type {
     font-size: 12px;
     display: inline-block;
@@ -80,8 +76,6 @@
     border: 1px solid @primary-color;
     color: @primary-color;
   }
-
-
 
   .articleList {
     :global {
@@ -115,11 +109,10 @@
 
       img {
         height: 165px;
-        transition: all .3s;
+        transition: all 0.3s;
       }
     }
   }
-
 
   .ant-spin-nested-loading {
     .ant-list-item:last-child {
@@ -128,11 +121,10 @@
     }
   }
 
-  .ant-spin-nested-loading>div>.ant-spin {
+  .ant-spin-nested-loading > div > .ant-spin {
     bottom: 0;
     top: auto;
   }
-
 
   .bottom-tips {
     max-width: 500px;
@@ -162,12 +154,9 @@
         padding: 15px !important;
       }
     }
-
   }
 
   @media screen and (max-width: @screen-sm) {
-
-
     .ant-list-item {
       flex-flow: row !important;
 
@@ -179,8 +168,7 @@
 
         .item-img {
           height: auto !important;
-          display: inline !important;
-
+          min-height: 100px;
           img {
             height: auto !important;
           }
@@ -196,17 +184,25 @@
         }
       }
     }
-
   }
 
   @media screen and (max-width: @screen-xs) {
-
     .ant-list {
       padding: 0 10px !important;
 
       .ant-list-item {
         flex-flow: row !important;
         padding: 10px !important;
+
+        .ant-list-item-extra {
+          .item-img {
+            display: block !important;
+            min-height: 57px !important;
+            img {
+              min-height: 57px !important;
+            }
+          }
+        }
 
         .ant-list-item-main {
           margin-right: 10px !important;
@@ -219,7 +215,6 @@
             margin-bottom: 0 !important;
           }
         }
-
       }
     }
   }

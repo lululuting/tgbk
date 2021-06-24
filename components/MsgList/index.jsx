@@ -1,10 +1,10 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-15 09:51:42
- * @LastEditTime: 2021-02-06 09:57:48
+ * @LastEditTime: 2021-05-14 18:11:47
  * @LastEditors: TingGe
  * @Description: 消息列表组件
- * @FilePath: /ting_ge_blog/components/MsgList/index.js
+ * @FilePath: /ting_ge_blog/components/MsgList/index.jsx
  */
 
 import React from 'react'
@@ -57,31 +57,16 @@ const MsgList = ({ data }) => {
 	const detailLink = (e, props) => {
 		e.stopPropagation()
 		if (~~props.type == 5) {
-			Router.push({
-				pathname: '/userCenter',
-				query: {
-					id: props.sourceId
-				}
-			})
+			Router.push('/userCenter[id]', `/userCenter/${props.sourceId}`)
 		} else {
-			Router.push({
-				pathname: '/detail',
-				query: {
-					id: props.sourceId
-				}
-			})
+			Router.push('/detail[id]', `/detail/${props.sourceId}`)
 		}
 	}
 
 	// 用户跳转
 	const linkUser = (e, props) => {
 		e.stopPropagation()
-		Router.push({
-			pathname: '/userCenter',
-			query: {
-				id: props.userId
-			}
-		})
+		Router.push('/userCenter[id]', `/userCenter/${props.userId}`)
 	}
 
 	const msgItem = (props) => {

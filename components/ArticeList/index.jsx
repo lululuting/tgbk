@@ -1,10 +1,10 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-15 09:51:42
- * @LastEditTime: 2021-01-31 14:31:52
+ * @LastEditTime: 2021-05-14 18:10:18
  * @LastEditors: TingGe
  * @Description: 通用列表组件
- * @FilePath: /tg-blog/components/ArticeList/index.js
+ * @FilePath: /ting_ge_blog/components/ArticeList/index.jsx
  */
 
 import React from 'react'
@@ -37,13 +37,7 @@ const searchHighlight = (title, searchValue) => {
 // 前往用户中心
 const linkUserCenter = (e, id) => {
 	e.stopPropagation();
-
-	Router.push({
-		pathname: '/userCenter',
-		query: {
-			id
-		}
-	})
+	Router.push('/userCenter[id]', `/userCenter/${id}`)
 }
 
 const ArticeList = (props) => {
@@ -87,7 +81,7 @@ const ArticeList = (props) => {
 						]}
 
 						extra={
-							<Link href={{ pathname: '/detail', query: { id: item.id } }}>
+							<Link href='/detail/[id]' as={`/detail/${item.id}`}>
 								<a className={classnames('item-img')}>
 									<LazyImg src={item.cover} alt={item.title} params="?imageView2/1/w/260/h/165" />
 								</a>
@@ -99,7 +93,7 @@ const ArticeList = (props) => {
 								<>
 									<If condition={props.typeTag}><span className="item-type">{item.typeName}</span></If>
 
-									<Link href={{ pathname: '/detail', query: { id: item.id } }}>
+									<Link href='/detail/[id]' as={`/detail/${item.id}`}>
 										{
 											props.search ?
 												searchHighlight(item.title, props.search)
@@ -121,7 +115,7 @@ const ArticeList = (props) => {
 							}
 						/>
 						<div className={styles.listContent}>
-							<Link href={{ pathname: '/detail', query: { id: item.id } }}>
+							<Link href='/detail/[id]' as={`/detail/${item.id}`}>
 								<a className="description">{substrtext(item.introduce, 60)}</a>
 							</Link>
 						</div>

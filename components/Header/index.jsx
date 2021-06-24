@@ -1,10 +1,10 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-15 09:51:42
- * @LastEditTime: 2021-03-17 10:55:12
+ * @LastEditTime: 2021-06-24 20:44:00
  * @LastEditors: TingGe
  * @Description: 公用头部
- * @FilePath: /ting_ge_blog/components/Header/index.jsx
+ * @FilePath: /tgbk/components/Header/index.jsx
  */
 
 import React, { useState, useEffect } from 'react'
@@ -14,7 +14,8 @@ import Router, { withRouter } from 'next/router'
 import { connect } from 'react-redux'
 import { Row, Col, Menu, Drawer, Spin, Input, Avatar, Badge, message, Dropdown, Tooltip, Popover } from 'antd'
 import request from '@/public/utils/request'
-import { throttle, loadScript, loadStyles, removeStyles } from '@/public/utils/utils'
+import { throttle, loadScript, loadStyles, removeStyles, jsonp } from '@/public/utils/utils'
+
 import serviceApi from '@/config/service'
 import Login from '../Login'
 import TingggeFm from '../TingggeFm'
@@ -39,6 +40,7 @@ import {
 import './style.less'
 
 const { Search } = Input
+const darkPath = '//cdn.lululuting.com/tgbk_static/dark.css';
 
 const Header = (props) => {
 
@@ -110,17 +112,12 @@ const Header = (props) => {
 
   // 点击改变
   const selectChang = (key) => {
-    Router.push({
-      pathname: '/list',
-      query: {
-        type: key
-      }
-    })
+    Router.push('/list/[type]', `/list/${key}`)
   }
 
   // 回车事件
   const onPressEnterLink = () => {
-    window.location.href = `/search?type=0&page=1&searchVal=${searchVal}`
+    Router.push('/search/[...search]', `/search/article/${searchVal}`)
   }
 
   useEffect(() => {
@@ -171,34 +168,36 @@ const Header = (props) => {
       })
     }
 
-    // 天气
-    request(serviceApi.ipWeather, {
-      method: 'get',
-    }).then((res) => {
-      setIpWeather(res.data)
-      setIpLong({ adlng: res.data[0].adlng, adlat: res.data[0].adlat })
-
-      request(serviceApi.weather, {
-        method: 'get',
-        params: {
-          location: `${res.data[0].adlng},${res.data[0].adlat}`,
-          lang: "cn",
-        }
-      }).then((res) => {
-        setWeatherInfo(res.data)
-      })
-
-    }).catch((err) => {
-      console.log(err)
+    jsonp({
+      url: serviceApi.ipWeather,
+      data: {
+        ak: '', // 百度地图ak
+        coor: 'gcj02'
+      },
+      success: (res) =>{ 
+        setIpWeather(res.content)
+        setIpLong({ adlng: res.content.point.x, adlat: res.content.point.y })
+  
+        request(serviceApi.weather, {
+          method: 'get',
+          params: {
+            location: `${res.content.point.x},${res.content.point.y}`,
+            lang: "cn",
+          }
+        }).then((ress) => {
+          setWeatherInfo(ress.data)
+        })
+      }
     })
 
     // 丝滑滚动插件
-    loadScript('https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.10/SmoothScroll.min.js', () => { })
+    loadScript('https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.10/SmoothScroll.min.js', () => { });
   }, [])
 
   useEffect(() => {
     // 监听路由做动画的，乱，我也不知道我在写什么～
     Router.events.on('routeChangeComplete', (...args) => {
+
       if (location.pathname === '/index' || location.pathname == '/') {
         setIsHome(true)
         scrollHandler();
@@ -225,10 +224,10 @@ const Header = (props) => {
     window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
       if (e.matches) {
         // 系统开启暗色模式后做什么
-        loadStyles('static/dark.css')
+        loadStyles(darkPath)
       } else {
         // 系统关闭暗色模式后做什么
-        removeStyles('dark.css')
+        removeStyles(darkPath)
       }
     });
   }, [])
@@ -258,20 +257,7 @@ const Header = (props) => {
   }
 
   const linkUser = (id) => {
-    // 重复路由的处理 不是很优雅
-    if (props.router.pathname === '/userCenter') {
-      Router.push({
-        pathname: '/userCenter',
-        query: { id },
-      }, { shallow: true }).then(() => {
-        Router.reload()
-      })
-    }
-
-    Router.push({
-      pathname: '/userCenter',
-      query: { id }
-    })
+    window.open(`/userCenter/${id}`)
   }
 
   // 天气
@@ -285,7 +271,7 @@ const Header = (props) => {
               <span style={{ fontSize: 16, fontWeight: 300, color: '#999' }}>℃</span>
             </div>
             <div className="address">
-              {ipWeather[0].district || ipWeather[0].city}
+              {ipWeather.address_detail.city}
               <div className="temp-text">
                 {weatherInfo.daily[0].tempMin}
                 <span style={{ fontSize: 12, fontWeight: 300, color: '#999', marginTop: 2 }}>℃</span>
@@ -303,6 +289,7 @@ const Header = (props) => {
           </div>
         </div>
 
+        {/* 只取第一条最新的警告  */}
         <If condition={weatherInfo.warning[0]}>
           <div className="warning-box">
             <WarningOutlined type="warning" style={{ marginRight: 10, color: '#ff4d4f', fontSize: 18 }} />
@@ -370,8 +357,7 @@ const Header = (props) => {
         </div>
 
         <p style={{ fontSize: 12, textAlign: 'center', color: '#999', margin: '20px 0 10px' }}>
-          挺哥预报-天气实况推送
-          {/* 数据更新： {moment(weatherInfo.updateTime).startOf('min').fromNow()}  */}
+          挺哥预报 & 和风天气 - 实况天气推送： {moment(weatherInfo.updateTime).startOf('min').fromNow()}
         </p>
       </If>
 
@@ -410,16 +396,16 @@ const Header = (props) => {
       case 1:
         const darkScheme = matchMedia('(prefers-color-scheme: dark)');
         if (darkScheme.matches) {
-          loadStyles('static/dark.css')
+          loadStyles(darkPath)
         } else {
-          removeStyles('dark.css')
+          removeStyles(darkPath)
         }
         break;
       case 2:
-        removeStyles('dark.css')
+        removeStyles(darkPath)
         break;
       case 3:
-        loadStyles('static/dark.css')
+        loadStyles(darkPath)
         break;
     }
   }, [theme])
@@ -442,7 +428,7 @@ const Header = (props) => {
 
             <Col xs={0} sm={0} md={0} lg={7} xl={7}>
               <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                <Link href={{ pathname: '/userCenter', query: { id: props.currentArticleInfo.userId } }}>
+                <Link href='/userCenter/[id]' as={`/userCenter/${props.currentArticleInfo.userId}`}>
                   <a className="ellipsis" style={{ display: 'flex', alignItems: 'center', }}>
                     <Avatar shape="square" size={28} src={props.currentArticleInfo.avatar} style={{ marginRight: 5 }} />
                     <span className="ellipsis" style={{ color: '#666', fontSize: 12, maxWidth: 100 }}>{props.currentArticleInfo.userName}</span>
@@ -475,7 +461,7 @@ const Header = (props) => {
           <If condition={ipWeather}>
             <Popover placement="bottom" content={weatherContent} trigger="hover">
               <div className='weather-title-box'>
-                <span>{ipWeather[0].district || ipWeather[0].city}</span>
+                <span>{ipWeather.address_detail.city}</span>
                 <If condition={weatherInfo && weatherInfo.now}>
                   <img style={{ width: 20, height: 20, marginRight: 5 }} src={`//cdn.lululuting.com/weather/${weatherInfo.now.icon} .png`} />
                   <span>{weatherInfo.now.text}</span>
@@ -672,14 +658,14 @@ const Header = (props) => {
 
           <If condition={ipWeather}>
             <div id='m-weathe-box' >
-              <span>{ipWeather[0].district || ipWeather[0].city}</span>
+              <span>{ipWeather.address_detail.city}</span>
               <span>
                 <If condition={weatherInfo && weatherInfo.now}>
                   <img style={{ width: 20, height: 20, marginRight: 5 }} src={`//cdn.lululuting.com/weather/${weatherInfo.now.icon} .png`} />
                 </If>
-                {ipWeather[0].weather.weather}
+                {/* {ipWeather[0].weather.weather} */}
               </span>
-              <span>{ipWeather[0].weather.temp}</span>
+              {/* <span>{ipWeather[0].weather.temp}</span> */}
             </div>
           </If>
 
@@ -694,7 +680,7 @@ const Header = (props) => {
 
           <Menu mode="vertical" style={{ border: 'none' }} onClick={() => setMuneVisible(false)}>
             <Menu.Item key="1">
-              <Link href="./list?type=1">
+              <Link href='/list/[type]' as={`/list/1`}>
                 <a>
                   <ExperimentOutlined />
 									技术
@@ -702,7 +688,7 @@ const Header = (props) => {
               </Link>
             </Menu.Item>
             <Menu.Item key="2">
-              <Link href="./list?type=2">
+              <Link href='/list/[type]' as={`/list/2`}>
                 <a>
                   <CameraOutlined />
 									摄影
@@ -710,7 +696,7 @@ const Header = (props) => {
               </Link>
             </Menu.Item>
             <Menu.Item key="3">
-              <Link href="./list?type=3">
+              <Link href='/list/[type]' as={`/list/3`}>
                 <a>
                   <CoffeeOutlined />
 									生活

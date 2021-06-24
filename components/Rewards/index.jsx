@@ -1,10 +1,10 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-15 09:51:42
- * @LastEditTime: 2021-01-31 14:38:22
+ * @LastEditTime: 2021-06-11 01:36:06
  * @LastEditors: TingGe
  * @Description: 赞赏码设置组件
- * @FilePath: /tg-blog/components/Rewards/index.js
+ * @FilePath: /ting_ge_blog/components/Rewards/index.jsx
  */
 
 import React, { Component } from 'react'
@@ -214,7 +214,7 @@ class Reward extends Component {
 					maskClosable={false}
 					confirmLoading={updateLoading}
 				>
-					<Form onSubmit={this.handleOk} ref={(ref) => this.formRef = ref} >
+					<Form onFinish={this.handleOk} ref={(ref) => this.formRef = ref} >
 						<FormItem label="二维码" {...formLayout} className="update-code">
 							<Upload.Dragger
 								{...updateProps}

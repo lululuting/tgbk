@@ -1,10 +1,10 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-20 10:27:47
- * @LastEditTime: 2021-02-25 23:41:39
+ * @LastEditTime: 2021-05-14 18:36:08
  * @LastEditors: TingGe
  * @Description: 详情页
- * @FilePath: /ting_ge_blog/pages/detail/index.jsx
+ * @FilePath: /ting_ge_blog/pages/detail/[id].jsx
  */
 
 import React, { useState, useEffect } from 'react'
@@ -24,7 +24,7 @@ import LazyImg from '@/components/LazyImg'
 import Comment from '@/components/Comment'
 import { PhotoSlider } from 'react-photo-view';
 import Vditor from 'vditor'
-import Router from 'next/router'
+import Router, { useRouter }  from 'next/router'
 import {
   ProfileOutlined,
   QqOutlined,
@@ -83,6 +83,15 @@ const Detail = (props) => {
           }
         })
 
+        // 给目录初始化样式并添加title
+        document.querySelector("#outline ul li > span").classList.add('vditor-outline__item--current')
+
+        const arrayList = Array.from(document.querySelectorAll('#outline ul li > span'))
+        // 设置title
+        for(let i=0;i<arrayList.length;i++) {
+          arrayList[i].setAttribute("title",arrayList[i].innerText)
+        }
+
         let toc = []
         window.addEventListener('scroll', () => {
           const scrollTop = window.scrollY
@@ -91,17 +100,29 @@ const Detail = (props) => {
             toc.push({
               id: item.id,
               offsetTop: item.offsetTop,
+              
             })
           })
-
+          
+          let flag = 0 // 防止执行多次添加标识
+          if(toc.length!==0 && flag === 0) {
+            flag++
+            let flagHeight = toc[toc.length-1].offsetTop*2
+            let lastChildpro = {id:"尾部添加高度",offsetTop: flagHeight} //尾部添加高度防止底部标签无法选取
+            toc.push(lastChildpro)
+           
+          }
+          
+          
           const currentElement = document.querySelector('.vditor-outline__item--current')
           for (let i = 0, iMax = toc.length; i < iMax; i++) {
+            
             if (scrollTop < toc[i].offsetTop - 30) {
               if (currentElement) {
                 currentElement.classList.remove('vditor-outline__item--current')
               }
-              let index = i > 0 ? i - 1 : 0
-              document.querySelector('span[data-target-id="' + toc[index].id + '"]').classList.add('vditor-outline__item--current')
+              let index = i > 0 ? i - 1 : 0;
+              document.querySelector('span[data-target-id="' + toc[index].id + '"]')&&document.querySelector('span[data-target-id="' + toc[index].id + '"]').classList.add('vditor-outline__item--current')
               break
             }
           }
@@ -225,7 +246,7 @@ const Detail = (props) => {
           <Title>{info.title}</Title>
 
           <div className="user-nav">
-            <Link href={{ pathname: '/userCenter', query: { id: info.userId } }}>
+            <Link href='/userCenter/[id]' as={`/userCenter/${info.userId}`}>
               <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
                 <Avatar shape="square" src={info.avatar} style={{ marginRight: 10 }} />
                 {info.userName}
@@ -324,6 +345,7 @@ const Detail = (props) => {
 
 
 export async function getServerSideProps(context) {
+  console.log(console)
 
   const promise = new Promise((resolve) => {
     request(serviceApi.getArticleInfo, {

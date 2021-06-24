@@ -1,10 +1,10 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-15 09:51:42
- * @LastEditTime: 2021-02-06 09:47:54
+ * @LastEditTime: 2021-05-14 18:23:53
  * @LastEditors: TingGe
  * @Description: 用户展示组件
- * @FilePath: /ting_ge_blog/components/UpInfo/index.js
+ * @FilePath: /ting_ge_blog/components/UpInfo/index.jsx
  */
 
 import React, { useEffect } from 'react'
@@ -58,13 +58,13 @@ const UpInfo = ({ data, link, children }) => {
 		<Card className={classnames('up-info')} bordered={false} bodyStyle={{ padding: 0 }}>
 			<Choose>
 				<When condition={link}>
-					<Link href={{ pathname: '/userCenter', query: { id: data.id } }} >
+					<Link href='/userCenter/[id]' as={`/userCenter/${data.id}`}>
 						<a className="user-avatar-box">
 							<Avatar size={100} src={data.avatar + '?imageslim'}></Avatar>
 						</a>
 					</Link>
 
-					<Link href={{ pathname: '/userCenter', query: { id: data.id } }}>
+					<Link href='/userCenter/[id]' as={`/userCenter/${data.id}`}>
 						<a>
 							<p className="up-name">{data.userName}</p>
 						</a>

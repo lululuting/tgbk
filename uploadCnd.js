@@ -1,5 +1,3 @@
-// 如需要把打包后的静态资源部署在七牛cdn请自行到config配置
-
 const readline = require('readline')
 const colors = require("colors");
 const FS = require('fs')
@@ -22,7 +20,7 @@ const config = new QiNiu.conf.Config();
 // config.useHttpsDomain = true;
 // 上传是否使用cdn加速
 // config.useCdnDomain = true;
-// 空间对应的机房 如 Zone_z2 华南 (其他自行看七牛云文档)
+// 空间对应的机房 Zone_z2(华南)
 config.zone = QiNiu.zone.Zone_z2;
 
 // 资源管理相关的操作首先要构建BucketManager对象

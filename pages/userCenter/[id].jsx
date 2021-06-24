@@ -1,10 +1,10 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-24 16:53:10
- * @LastEditTime: 2021-02-06 09:51:12
+ * @LastEditTime: 2021-06-19 18:51:16
  * @LastEditors: TingGe
  * @Description: 个人中心
- * @FilePath: /ting_ge_blog/pages/userCenter/index.jsx
+ * @FilePath: /ting_ge_blog/pages/userCenter/[id].jsx
  */
 
 import React, { useState, useEffect } from 'react'
@@ -173,6 +173,15 @@ const UserCenter = (props) => {
     })
   }
 
+  // 查询用户信息（主要是看用户是否已关注）
+  useEffect(()=> {
+    setTimeout(()=> {
+      if(props?.loginUserInfo?.userId && props?.router?.query?.id){
+        getUserInfo();
+      }
+    }, 1000)
+  }, [])
+
   // 查询用户信息
   const getUserInfo = (callback) => {
     request(serviceApi.getUserInfo, {
@@ -291,7 +300,7 @@ const UserCenter = (props) => {
           message.success(res.msg)
           localStorage.setItem('userInfo', null)
           Router.replace({
-            pathname: '/index',
+            pathname: '/',
           })
         }
       })
@@ -650,7 +659,7 @@ const UserCenter = (props) => {
                         <When condition={listData && listData.length}>
                           <For each="item" of={listData}>
                             <Col xs={24} xm={12} lm={12} lg={12} key={index}>
-                              <Link replace href={{ pathname: '/userCenter', query: { id: item.id } }}>
+                              <Link replace href='/userCenter/[id]' as={`/userCenter/${item.id}`}>
                                 <a target="_blank">
                                   <Card bodyStyle={{ padding: 20 }} className="user-list" bordered={false}>
                                     <Meta
@@ -683,7 +692,7 @@ const UserCenter = (props) => {
                         <When condition={listData && listData.length}>
                           <For each="item" of={listData}>
                             <Col xs={24} xm={12} lm={12} lg={12} key={index}>
-                              <Link replace href={{ pathname: '/userCenter', query: { id: item.id } }}>
+                              <Link replace href='/userCenter/[id]' as={`/userCenter/${item.id}`}>
                                 <a target="_blank">
                                   <Card bodyStyle={{ padding: 20 }} className="user-list" bordered={false}>
                                     <Meta

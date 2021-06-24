@@ -16,7 +16,7 @@ _______|_______/__/ ____ \__\__|___\__\__|___\__\____
 |  |__/  /|  ____/  /__\  \ |  |   )  |  ____|  |__/  /
 |  ____  \|  |__/  ______  \|  |__/  /|  |___|  ____  \
 |__|   \__\____/__/      \__\_______/ |______|__|   \__\
-                https://darkreader.org
+                //darkreader.org
 */
 /* User-Agent Style */
 html {
@@ -54,7 +54,7 @@ select:-webkit-autofill {
 }
 
 /* Invert Style */
-.jfk-bubble.gtx-bubble, .captcheck_answer_label > input + img, span#closed_text > img[src^="https://www.gstatic.com/images/branding/googlelogo"], span[data-href^="https://www.hcaptcha.com/"] > #icon, embed[type="application/pdf"] {
+.jfk-bubble.gtx-bubble, .captcheck_answer_label > input + img, span#closed_text > img[src^="//www.gstatic.com/images/branding/googlelogo"], span[data-href^="//www.hcaptcha.com/"] > #icon, embed[type="application/pdf"] {
     filter: invert(100%) hue-rotate(180deg) contrast(90%) !important;
 }
 
@@ -6674,7 +6674,7 @@ body {
     color: rgb(168, 160, 149);
 }
 .header-user-box #header-user-info {
-    background-image: url("http://cdn.lululuting.com/upic/user_info_bg.png");
+    background-image: url("//cdn.lululuting.com/upic/user_info_bg.png");
 }
 .header-user-box #header-user-info .user-avatar {
     border-color: rgb(48, 52, 54);
@@ -6764,7 +6764,7 @@ body {
     rgb(0, 113, 203) 100%);
 }
 .header .header-box .left-logo .logo {
-    background-image: url("https://lululuting.com/static/logo1.png");
+    background-image: url("//lululuting.com/static/logo1.png");
 }
 .header .header-box .right-memu .user-box {
     color: rgb(200, 195, 188);
@@ -6855,7 +6855,7 @@ body {
     box-shadow: none !important;
 }
 .scrollActive .header-box .logo {
-    background-image: url("https://lululuting.com/static/logo1.png");
+    background-image: url("//lululuting.com/static/logo1.png");
 }
 .scrollActive .header-box .right-memu .menu-box .item:hover {
     background-color: rgb(0, 98, 190);
@@ -6870,7 +6870,7 @@ body {
     background-color: transparent !important;
 }
 .header.homeHeader .logo {
-    background-image: url("https://lululuting.com/static/logo.png") !important;
+    background-image: url("//lululuting.com/static/logo.png") !important;
 }
 .header.homeHeader .right-memu .menu-box .item {
     color: rgb(232, 230, 227) !important;
@@ -6935,14 +6935,14 @@ body {
     rgb(0, 113, 203) 100%);
 }
 .header.homeHeader.scrollActive .logo {
-    background-image: url("https://lululuting.com/static/logo1.png") !important;
+    background-image: url("//lululuting.com/static/logo1.png") !important;
 }
 @media screen and (max-width: 768px) {
     .header .header-box .left-logo {
         color: rgb(200, 195, 188) !important;
     }
     .header .header-box .left-logo .logo {
-        background-image: url("https://lululuting.com/static/logo1.png") !important;
+        background-image: url("//lululuting.com/static/logo1.png") !important;
     }
 }
 .footer {
@@ -7024,7 +7024,7 @@ body {
     background-color: rgb(24, 26, 27);
 }
 .page_404 .four_zero_four_bg {
-    background-image: url("https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif");
+    background-image: url("//cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif");
 }
 .page_404 .link_home {
     background-image: linear-gradient(-84deg,
@@ -7604,7 +7604,7 @@ button.swiper-pagination-bullet {
     background-color: rgb(57, 0, 0) !important;
 }
 .detail-box #preview pre::before {
-    background-image: url("http://cdn.lululuting.com/upic/point.png");
+    background-image: url("//cdn.lululuting.com/upic/point.png");
     background-color: rgb(32, 35, 36);
 }
 .vditor-tooltipped::after {
@@ -14876,7 +14876,7 @@ body {
     color: rgb(168, 160, 149);
 }
 .header-user-box #header-user-info {
-    background-image: url("http://cdn.lululuting.com/upic/user_info_bg.png");
+    background-image: url("//cdn.lululuting.com/upic/user_info_bg.png");
 }
 .header-user-box #header-user-info .user-avatar {
     border-color: rgb(48, 52, 54);
@@ -14966,7 +14966,7 @@ body {
     rgb(0, 113, 203) 100%);
 }
 .header .header-box .left-logo .logo {
-    background-image: url("https://lululuting.com/static/logo1.png");
+    background-image: url("//lululuting.com/static/logo1.png");
 }
 .header .header-box .right-memu .user-box {
     color: rgb(200, 195, 188);
@@ -15057,7 +15057,7 @@ body {
     box-shadow: none !important;
 }
 .scrollActive .header-box .logo {
-    background-image: url("https://ululuting.com/static/logo1.png");
+    background-image: url("//ululuting.com/static/logo1.png");
 }
 .scrollActive .header-box .right-memu .menu-box .item:hover {
     background-color: rgb(0, 98, 190);
@@ -15072,7 +15072,7 @@ body {
     background-color: transparent !important;
 }
 .header.homeHeader .logo {
-    background-image: url("https://lululuting.com/static/logo.png") !important;
+    background-image: url("//lululuting.com/static/logo.png") !important;
 }
 .header.homeHeader .right-memu .menu-box .item {
     color: rgb(232, 230, 227) !important;
@@ -15136,14 +15136,14 @@ body {
     rgb(0, 113, 203) 100%);
 }
 .header.homeHeader.scrollActive .logo {
-    background-image: url("https://lululuting.com/static/logo1.png") !important;
+    background-image: url("//lululuting.com/static/logo1.png") !important;
 }
 @media screen and (max-width: 768px) {
     .header .header-box .left-logo {
         color: rgb(200, 195, 188) !important;
     }
     .header .header-box .left-logo .logo {
-        background-image: url("https://lululuting.com/static/logo1.png") !important;
+        background-image: url("//lululuting.com/static/logo1.png") !important;
     }
 }
 .footer {
@@ -15225,7 +15225,7 @@ body {
     background-color: rgb(24, 26, 27);
 }
 .page_404 .four_zero_four_bg {
-    background-image: url("https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif");
+    background-image: url("//cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif");
 }
 .page_404 .link_home {
     background-image: linear-gradient(-84deg,
@@ -15805,7 +15805,7 @@ button.swiper-pagination-bullet {
     background-color: rgb(57, 0, 0) !important;
 }
 .detail-box #preview pre::before {
-    background-image: url("http://cdn.lululuting.com/upic/point.png");
+    background-image: url("//cdn.lululuting.com/upic/point.png");
     background-color: rgb(32, 35, 36);
 }
 .vditor-tooltipped::after {
@@ -16489,6 +16489,6 @@ button.swiper-pagination-bullet {
 .header.homeHeader {
     background-color: rgba(24, 26, 27, 0.6) !important;
 }
-a[href="https://coinmarketcap.com/"] > svg[width="94"][height="16"] > path {
+a[href="//coinmarketcap.com/"] > svg[width="94"][height="16"] > path {
     fill: var(--darkreader-neutral-text) !important;
 }

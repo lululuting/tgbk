@@ -1,10 +1,10 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-25 15:20:41
- * @LastEditTime: 2021-01-31 14:51:22
+ * @LastEditTime: 2021-05-30 22:37:14
  * @LastEditors: TingGe
  * @Description: 搜索页
- * @FilePath: /tg-blog/pages/search/index.jsx
+ * @FilePath: /ting_ge_blog/pages/search/[...search].jsx
  */
 
 import React, { useState, useEffect } from 'react'
@@ -16,6 +16,10 @@ import request from '@/public/utils/request'
 import serviceApi from '@/config/service'
 import ArticeList from '@/components/ArticeList'
 import LazyImg from '@/components/LazyImg'
+import { filtersDict } from '@/public/utils/dict'
+import _ from 'lodash';
+import Router from 'next/router'
+
 import {
 	ReadOutlined,
 	UserOutlined,
@@ -48,7 +52,7 @@ const SearchPage = (props) => {
 			request(serviceApi.getSearchList, {
 				method: 'get',
 				params: {
-					type,
+					type: filtersDict('SEARCH_TYPE', type),
 					searchVal,
 					page,
 					limit,
@@ -90,26 +94,14 @@ const SearchPage = (props) => {
 
 	// 切换
 	const tabKeyChang = (key) => {
-		setListData([])
-		setLoadMoreLoading(true)
-		setIsNoData(false)
-		setTabKey(key)
-		setPage(1)
-
-		// 文章查5 用户查10
-		let limit = 5
-		if (key == 1) limit = 10;
-
-		searchLsit(key, searchVal, 1, limit, listSort).then((res) => {
-			if (!res.data.length) {
-				setLoadMoreLoading(false)
-				setIsNoData(true)
-				return
-			}
-			setListData(res.data)
-			setLoadMoreLoading(false)
-		})
+		Router.push('/search/[...search]', `/search/${key}/${searchVal}`,)
 	}
+
+	useEffect(()=> {
+		setTabKey(props.searchType)
+		setSearchVal(props.searchText)
+    	setListData(props.articleList)
+	}, [props.searchType, props.searchText])
 
 	return (
 		<>
@@ -131,11 +123,11 @@ const SearchPage = (props) => {
 								bordered={false}
 							>
 								<ul className="left-nav-list">
-									<li className={tabKey == 0 ? 'active' : ''} onClick={() => tabKeyChang(0)}>
+									<li className={tabKey === 'article' ? 'active' : ''} onClick={() => tabKeyChang('article')}>
 										<ReadOutlined /> 文章
 									</li>
 
-									<li className={tabKey == 1 ? 'active' : ''} onClick={() => tabKeyChang(1)}>
+									<li className={tabKey === 'user' ? 'active' : ''} onClick={() => tabKeyChang('user')}>
 										<UserOutlined /> 用户
 									</li>
 								</ul>
@@ -150,11 +142,11 @@ const SearchPage = (props) => {
 							bordered={false}
 						>
 							<ul className="left-nav-list">
-								<li className={tabKey == 0 ? 'active' : ''} onClick={() => tabKeyChang(0)}>
+								<li className={tabKey == 'article' ? 'active' : ''} onClick={() => tabKeyChang('article')}>
 									<ReadOutlined /> 文章
 								</li>
 
-								<li className={tabKey == 1 ? 'active' : ''} onClick={() => tabKeyChang(1)}>
+								<li className={tabKey == 'user' ? 'active' : ''} onClick={() => tabKeyChang('user')}>
 									<UserOutlined /> 用户
 								</li>
 							</ul>
@@ -173,7 +165,7 @@ const SearchPage = (props) => {
 									</>
 								}
 								extra={
-									<If condition={tabKey == 0}>
+									<If condition={tabKey == 'article'}>
 										<span onClick={listSortFn} className="switch-btn" >
 											<SwapOutlined style={{ color: '#1890ff', marginRight: 10 }} />
 											切换为{listSort ? '热门排序' : '时间排序'}
@@ -182,7 +174,7 @@ const SearchPage = (props) => {
 								}
 							>
 								<Choose>
-									<When condition={tabKey == 0}>
+									<When condition={tabKey == 'article'}>
 										<ArticeList
 											loadMore={loadMore}
 											isNoData={isNoData}
@@ -197,7 +189,7 @@ const SearchPage = (props) => {
 												<When condition={listData && listData.length}>
 													<For each="item" of={listData}>
 														<Col xs={24} xm={12} lm={12} lg={12} key={index}>
-															<Link href={{ pathname: '/userCenter', query: { id: item.id } }}>
+															<Link href='/userCenter/[id]' as={`/userCenter/${item.id}`}>
 																<a>
 																	<Card bodyStyle={{ padding: 20 }} className="user-list" bordered={false} loading={loadMoreLoading}>
 																		<Meta
@@ -245,14 +237,18 @@ const SearchPage = (props) => {
 }
 
 export async function getServerSideProps(context) {
+
+	const searchType = context.query.search[0];
+	const searchText = context.query.search[1] || ' ';
+	
 	const promise = new Promise((resolve) => {
 		request(serviceApi.getSearchList, {
 			method: 'get',
 			params: {
-				type: context.query.type,
-				searchVal: context.query.searchVal,
+				type: filtersDict('SEARCH_TYPE', searchType),
+				searchVal: searchText,
 				page: 1,
-				limit: 5,
+				limit: searchType === 'user'? 10 : 5, // 文章查5 用户查10
 				sort: 0,
 			}
 		}).then((res) => {
@@ -268,8 +264,6 @@ export async function getServerSideProps(context) {
 
 	let articleList = await promise
 	let banner = await promise1
-	let searchType = context.query.type
-	let searchText = context.query.searchVal
 
 	return { props: { articleList, banner, searchType, searchText } }
 }
