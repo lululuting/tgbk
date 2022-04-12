@@ -8637,10 +8637,10 @@ validator@^13.5.2:
   resolved "https://registry.nlark.com/validator/download/validator-13.6.0.tgz?cache=0&sync_timestamp=1618914469901&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fvalidator%2Fdownload%2Fvalidator-13.6.0.tgz#1e71899c14cdc7b2068463cb24c1cc16f6ec7059"
   integrity sha1-HnGJnBTNx7IGhGPLJMHMFvbscFk=
 
-vditor@^3.7.5:
-  version "3.8.5"
-  resolved "https://registry.nlark.com/vditor/download/vditor-3.8.5.tgz#5590810eeeeca5ad0d5b5b465ef6bcc5cd33be5f"
-  integrity sha1-VZCBDu7spa0NW1tGXva8xc0zvl8=
+vditor@^3.8.13:
+  version "3.8.13"
+  resolved "https://registry.yarnpkg.com/vditor/-/vditor-3.8.13.tgz#9f4a549fd559e14fe65cc188ceadba61051db57c"
+  integrity sha512-vp6OF1n9wIduKtLvvTYtn+7Gr1Az6MqDIEBpLzik+PTQ208YjrcQ+Ba4AHXMMvJgDtbYP3PdY8OixWKecFzo2A==
   dependencies:
     diff-match-patch "^1.0.5"
 
