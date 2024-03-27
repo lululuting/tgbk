@@ -1,0 +1,123 @@
+.comment-box {
+  padding: 48px;
+  // background-color: var(--bg-color);
+  font-size: 14px;
+  color:  var(--text-color-medium);
+  line-height: 1.5;
+
+  :global{
+    .ant-comment {
+      background-color: var(--comment-bg-color);
+    }
+
+    .ant-list {
+      .ant-comment {
+        background-color: transparent !important;
+      }
+    }
+
+    .ant-comment-content-detail{
+      color: var(--text-color-deep);
+    }
+    .ant-comment-nested {
+      padding: 0 15px;
+      border-radius: 8px;
+      background-color: var(--bg-reply-comment-color);
+    }
+    .ant-comment-content-author{
+      margin-bottom:10px;
+    }
+    .ant-comment-actions{
+      li > span{
+        color: var(--text-color-medium);
+      }
+    }
+  }
+
+
+
+  .comment-header {
+    font-size: 14px;
+    margin-bottom: 10px;
+    position: relative;
+    border-radius: 10px;
+    background-color: #028fff;
+
+    .comment-header-left {
+      padding: 20px;
+      position: relative;
+      z-index: 2;
+
+      .comment-header-title {
+        font-size: 16px;
+        color: var(--g-text-color);
+        line-height: 1.5;
+        margin-bottom: .25em;
+      }
+  
+      .comment-header-desc {
+        font-size: 12px;
+        color: #eee;
+        .btn {
+          line-height: 1.5;
+          padding: 0 2px;
+          display: inline-block;
+          margin: 0 2px;
+          transition: .3s all;
+          cursor: pointer;
+          &:hover {
+            color: var(--g-primary-color);
+            background-color: var(--g-text-color);
+            border-radius: 5px;
+          }
+        }
+      }
+    }
+    .right-box {
+      width: 128px;
+      height: auto;
+      background-image: url(https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png?imageslim);
+      background-size: cover;
+      position: absolute;
+      right: 0px;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      background-color: #a6dbff;
+      border-radius: 50%;
+      border-bottom-right-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+  }
+
+  .header-tips{
+    :global {
+      .ant-list-header {
+        color: var(--text-color-deep);
+        border-color: var(--border-color);
+      }
+    }
+  }
+
+  .comment-info{
+    span{
+      font-size:12px;
+    color: var(--text-color-light);
+    }
+  }
+
+  .authorName{
+    font-size: 14px;
+    color: var(--text-color-deep);
+  }
+}
+
+
+@media screen and (max-width: @screen-lg) {
+}
+
+@media screen and (max-width: @screen-md) {
+  .comment-box {
+    padding: 0 !important;
+  }
+}

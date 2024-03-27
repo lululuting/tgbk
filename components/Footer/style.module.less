@@ -1,0 +1,140 @@
+.footer {
+  width: 100%;
+  background-color: var(--g-footer-bg-color);
+
+  .footer-box {
+    color: var(--g-footer-text-color);
+    letter-spacing: 2px;
+    font-size: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    .logo {
+      width: 42px;
+      background-color: var(--g-text-color);
+      border-radius: 5px;
+    }
+
+    .right-menu {
+      background-color: var(--g-footer-bg-color);
+      padding: 5px;
+      border-radius: 3px;
+      transition: all 0.2s;
+      margin-left: 10px;
+    }
+
+    .logo-text{
+      color: var(--g-footer-logo-text-color);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .beian-a {
+      color: var(--g-footer-text-color);
+      text-decoration: none;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .tools-box {
+    .tool-list {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 80px;
+      overflow: hidden;
+      width: 900px;
+    }
+
+    .tool-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      transition: all 0.3s;
+
+      &:hover .hide-desc {
+        width: 200px;
+        opacity: 1;
+      }
+
+      &:hover .inner {
+        opacity: 1;
+      }
+    }
+
+    .tool-icon {
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      background-size: cover;
+    }
+
+    .tool-desc {
+      position: relative;
+      overflow: hidden;
+
+      .hide-desc {
+        opacity: 0;
+        width: 0;
+        height: 120px;
+        transition: all 0.3s;
+      }
+
+      .inner {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 200px;
+        color: var(--g-text-color);
+        padding: 24px 20px;
+        opacity: 0;
+        transition: all 0.3s;
+
+        .name {
+          font-weight: bold;
+          font-size: 14px;
+          margin: 4px 0 2px;
+        }
+
+        .describe {
+          font-size: 12px;
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+@keyframes rotate1 {
+  0% {
+    transform: translateY(0);
+  }
+
+  25% {
+    transform: translateY(2px);
+  }
+
+  50% {
+    transform: translateY(4px) scale(1.1, 0.9);
+  }
+
+  75% {
+    ransform: translateY(2px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media screen and (max-width: @screen-lg) {
+  .footer {
+    display: none !important;
+  }
+}

@@ -1,25 +1,10 @@
 {
-    "presets":["next/babel"],  //Next.js的总配置文件，相当于继承了它本身的所有配置
+    "presets": ["next/babel"],
     "plugins":[    
-        // 可以使用装饰器decorator
-        ["@babel/plugin-proposal-decorators", { "legacy": true }], 
-        // 让我们可以使用根路径，避免相对路径的混乱，如import Head from '@/components/Head'
-        [
-            "module-resolver",
-            {
-                "alias": {
-                    "@": "./"
-                }
-            }
-        ],
-         //增加新的插件，这个插件就是让antd可以按需引入，包括CSS
-        [
-            "import",
-            {
-                "libraryName": "antd"
-                // "style": true  // 打包出错注销掉
-            }
-        ]
+      // 可选链配置
+      "@babel/plugin-proposal-optional-chaining",
+      "@babel/plugin-proposal-nullish-coalescing-operator",
+      // 可以使用装饰器decorator
+      ["@babel/plugin-proposal-decorators", { "legacy": true }]
     ]
-}
-
+  }

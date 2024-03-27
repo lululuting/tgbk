@@ -1,0 +1,22 @@
+.file-uploader-box {
+  .file-uploader {
+    padding: 6px;
+    .list-upload-box {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.hide-uploader{
+  padding: 0 !important;
+  :global {
+    .ant-upload{
+      display: none;
+    }
+  }
+}

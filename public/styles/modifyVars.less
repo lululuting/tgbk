@@ -1,0 +1,83 @@
+
+@screen-lg: 992px;
+@screen-md: 768px;
+@screen-sm: 576px;
+@screen-xs: 480px;
+
+:root {
+    
+    // 公共
+    --g-text-hover-color: #fff;
+    --g-text-color: #fff;
+    --g-footer-text-color:#777;
+    --g-input-bg-color: #efefef;
+    --g-footer-bg-color: #000;
+    --g-footer-logo-text-color: #40a9ff;
+    --g-primary-color: #1ab6ff;
+    --g-primary-image:  linear-gradient(-84deg,
+        #1ab6ff 0,
+        #1ab6ff 0,
+        #028fff 100%);
+        
+    // 特殊
+    --login-modal-bg-color: #fff;
+    --home-header-color: #fff;
+    --list-img-bg-color: #f0f5f9;
+    --option-hover-color: #e6f7ff;
+    --comment-bg-color: #fff;
+    --bg-comment-editor-color: #f5f7fa6b;
+    --bg-reply-comment-color: #f5f7fa;
+    --comment-editor-input-color: #f5f7fa;
+    --bg-article-item-disabled-color: #f0f5f9;
+    --bg-article-item-frozen-color: #fdc9cc;
+    --input-placeholder-color: #666;
+    --transparent-color: transparent;
+    
+
+    --primary-color: #1ab6ff; // 全局主色
+    --secondary-color: #40a9ff; // 副色
+    
+    // 背景
+    --bg-color: #fff; // 主题背景色
+    --bg-color-deep: #f4f7fa; // 深
+    --bg-color-medium: rgba(255, 255, 255, 0.04); // 中
+    --bg-color-light: rgba(255, 255, 255, 0.1); // 浅
+    
+    // 文字
+    --text-color-deep: #333; // 深  
+    --text-color-medium: #666; // 中
+    --text-color-light: #999; // 浅
+    --border-color: #fff;
+
+}
+
+:root[theme='dark'] {
+    // 特殊
+    --login-modal-bg-color: #000;
+    --home-header-color: #fff;
+    --list-img-bg-color: rgba(255, 255, 255, 0.1);
+    --option-hover-color: rgba(255, 255, 255, 0.04);
+    --bg-article-item-disabled-color: #000;
+    --bg-article-item-frozen-color: #5c0005;
+
+    /* 基础颜色变量 */
+    --primary-color: #000000e0;
+    --secondary-color: #40a9ff; // 副色
+    --comment-bg-color: #181a1b;
+    --bg-comment-editor-color: #1d1f20;
+    --bg-reply-comment-color: #1d1f20;
+
+    // 背景
+    --bg-color: #181a1b; // 主题背景色
+    --bg-color-deep: #1d1f20; // 深
+    --bg-color-medium: rgba(255, 255, 255, 0.04); // 中
+    --bg-color-light: rgba(255, 255, 255, 0.1); // 浅
+    // 文字
+    --text-color-deep: #fff; // 深
+    --text-color-medium: #eee; // 中
+    --text-color-light: #ddd; // 浅
+
+    --border-color: #323334;
+}
+
+

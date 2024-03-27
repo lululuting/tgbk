@@ -1,0 +1,320 @@
+.article-list {
+  :global {
+    .ant-list-item-meta-title {
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 30px;
+      margin-bottom: 20px;
+  
+      display: flex;
+      align-items: center;
+      & > a {
+        flex: 1;
+        width: 0;
+      }
+    }
+  
+    .ant-list-item-main {
+      position: relative;
+    }
+  
+    .ant-list-item-action {
+      margin-top: 10px;
+      & > li {
+        color: var(--text-color-light) !important;
+        padding: 0 14px;
+      }
+    }
+
+  
+    .ant-list-item {
+      padding: 20px;
+      margin-bottom: 10px;
+      transition: all 0.2s;
+      border-radius: 0px;
+      position: relative;
+      flex-flow: row-reverse;
+      display: flex;
+      align-items: center;
+    }
+  
+    .ant-list-item.disabled {
+      background-color: var(--bg-article-item-disabled-color) !important;
+    }
+  
+    .ant-list-item.frozen {
+      background-color: var(--bg-article-item-frozen-color) !important;
+    }
+    
+    .ant-list-item-extra {
+      width: 260px;
+      height: 165px;
+      margin: 0 24px 0 0 !important;
+      background: var(--list-img-bg-color);
+      display: flex;
+      align-items: center;
+  
+      .item-img {
+        height: 165px;
+        display: block;
+        border-radius: 0px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      img {
+        height: 165px;
+        transition: all 0.2s;
+      }
+    }
+  
+    .ant-spin-nested-loading {
+      .ant-list-item:last-child {
+        border: none !important;
+        margin-bottom: 30px;
+      }
+    }
+  
+    .ant-spin-nested-loading > div > .ant-spin {
+      bottom: 0;
+      top: auto;
+    }
+    
+  }
+      
+  .article-item-box{
+    &:hover {
+      background: var(--bg-color-deep);
+
+      .item-action-box{
+        display: flex !important;
+      }
+
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
+  .article-name{
+    color: var(--text-color-deep) !important;
+  }
+  
+  .item-tag-list {
+    padding: 0;
+
+    .item-tag {
+      display: inline-block;
+      padding: 0 8px;
+      border-radius: 0;
+      color: var(--text-color-medium);
+      cursor: pointer;
+      margin-right: 15px;
+      margin-bottom: 15px;
+      line-height: 24px;
+
+      span {
+        color: var(--secondary-color);
+      }
+
+      &:hover {
+        color: var(--g-text-color);
+        background-image: var(--g-primary-image);
+        span {
+          color: var(--g-text-color);
+        }
+      }
+    }
+  }
+
+  .item-type {
+    font-size: 12px;
+    border-radius: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 34px;
+    height: 21px;
+    margin-right: 10px;
+    vertical-align: text-bottom;
+    font-weight: normal;
+    background-image: var(--g-primary-image);
+    color: var(--g-text-color);
+  }
+
+  .articleList {
+    :global {
+      .ant-list-item:first-child {
+        padding-top: 0;
+      }
+    }
+  }
+
+  .bottom-tips {
+    max-width: 500px;
+    margin: 50px auto;
+    :global {
+      .ant-divider {
+        .ant-divider-inner-text {
+          font-size: 14px;
+          color: var(--text-color-light);
+        }
+      }
+    }
+  }
+
+  .item-introduce {
+    height: 44px;
+    margin-bottom: 0;
+    a {
+      color: var(--text-color-light);
+    }
+  }
+
+  .item-action-box{
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    flex-direction: column;
+
+    .action-btn{
+      height: 26px;
+      width: 50px;
+      text-align: center;
+      line-height: 26px;
+      font-size: 14px;
+      margin-bottom: 10px;
+      background: #fff;
+      color:#666;
+    }
+
+    .primary-btn:hover {
+      color:#fff;
+      background: #028fff;
+    }
+
+    .del-btn:hover  {
+      color:#fff;
+      background: #f85f69;
+    }
+
+    .apply-btn:hover  {
+      color:#fff;
+      background: #8c8ff6;
+    }
+  }
+
+  .status-box{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    flex-direction: column;
+    .disabled {
+      font-size: 14px;
+      background-color: #099aff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      color: #fff;
+      margin: 0 5px;
+    }
+    
+    .frozen{
+      font-size: 14px;
+      background-color: #f85f69;
+      padding: 6px 14px;
+      border-radius: 20px;
+      color: #fff;
+      margin: 0 5px;
+    }
+  }
+
+  @media screen and (max-width: @screen-md) {
+    :global{
+      .ant-list-item-meta-description {
+        display: none !important;
+      }
+  
+      .ant-list-item-action {
+        display: none !important;
+      }
+  
+      .ant-list {
+        padding: 0 15px !important;
+  
+        .ant-list-item {
+          padding: 15px !important;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: @screen-sm) {
+    :global{
+      .ant-list-item {
+        flex-flow: row !important;
+
+        .ant-list-item-extra {
+          margin: 0 !important;
+          width: 100% !important;
+          height: auto !important;
+          overflow: hidden !important;
+
+          .item-img {
+            height: auto !important;
+            min-height: 100px;
+            img {
+              height: auto !important;
+            }
+          }
+        }
+
+        .ant-list-item-main {
+          min-width: 60% !important;
+          margin-right: 20px !important;
+
+          .ant-list-item-meta-title {
+            font-size: 16px !important;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: @screen-xs) {
+    :global{
+      .ant-list {
+        padding: 0 10px !important;
+
+        .ant-list-item {
+          flex-flow: row !important;
+          padding: 10px !important;
+
+          .ant-list-item-extra {
+            .item-img {
+              display: block !important;
+              min-height: 57px !important;
+              img {
+                min-height: 57px !important;
+              }
+            }
+          }
+
+          .ant-list-item-main {
+            margin-right: 10px !important;
+
+            .description {
+              display: none !important;
+            }
+
+            .ant-list-item-meta-title {
+              margin-bottom: 0 !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

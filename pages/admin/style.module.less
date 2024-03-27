@@ -1,0 +1,45 @@
+
+.base-manage {
+  width: 956px;
+
+
+  .list-card {
+    .action-box {
+      display: flex;
+      justify-content:space-between;
+      align-items:center;
+      .left-box {
+        align-items:center;
+      } 
+      .right-box {
+        justify-content: flex-end;
+        align-items:center;
+      } 
+    }
+  }
+
+
+  :global {
+    .ant-table{
+      .ant-table-row-selected td{
+        color: var(--text-color-deep);
+      }
+    }
+  }
+
+  //   .ant-table-wrapper .ant-table-thead >tr>th{
+  //     background-color: var(--bg-color-medium);
+  //     color: var(--text-color-deep);
+  //   }
+  //   .ant-table-wrapper .ant-table-cell-fix-left {
+  //     background-color: var(--bg-color);
+  //   }
+  //   .ant-table-wrapper .ant-table-cell-fix-right{
+  //     background-color: var(--bg-color);
+  //   }
+  // }
+}
+
+@media screen and (max-width: @screen-xs) {
+
+}

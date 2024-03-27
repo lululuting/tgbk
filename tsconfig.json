@@ -12,14 +12,15 @@
     "noImplicitAny": true, // 严格检查不允许隐式当any类型
     "strictNullChecks": true, // 严格检查空值
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true, // 不生成编译后的文件，只用语法检查功能
+    "noEmit": false, // 生成编译后的文件
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "removeComments": true, // 是否移除注释
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",

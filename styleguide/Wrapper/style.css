@@ -1,0 +1,37 @@
+.rsg--button-32,.rsg--isActive-33{
+    border: none;
+    outline: none;
+}
+.rsg--sidebar-4{
+    width: 260px;
+}
+.rsg--input-66{
+    padding: 4px;
+}
+.rsg--logo-5{
+    border: none;
+}
+
+.rsg--cell-37:last-child{
+    width: 50%;
+}
+
+.rsg--name-38 {
+    font-size: 12px;
+    color: rgb(25 144 255);
+    border-radius: 5px;
+    padding: 5px 5px;
+    background-color: rgb(24 144 255 / 12%);
+}
+.rsg--cell-37 p:last-child {
+    font-size: 14px;
+}
+.rsg--logo-62{
+    color: #fff;
+}
+.rsg--type-40 {
+    color: #12981a;
+}
+.rsg--root-60 textarea{
+    border: none !important;
+}

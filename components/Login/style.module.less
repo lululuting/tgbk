@@ -1,0 +1,93 @@
+// 登录
+.login-box {
+  :global {
+    .ant-modal-content{
+      background-color: var(--login-modal-bg-color);
+    }
+    .ant-modal-close-x{
+      color: var(--text-color-deep);
+    }
+  }
+
+  .login-logo {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+
+    .logo {
+      width: 60px;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .title {
+      color: var(--text-color-medium);
+      letter-spacing: 2px;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .b-title {
+        font-weight: bold;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+
+      .s-title {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .login-form-forgot {
+    font-size: 12px;
+    color: var(--text-color-light);
+  }
+
+
+
+  .login-form-button {
+    display: block;
+    width: 144px;
+    height: 40px;
+    background-image: var(--g-primary-image);
+    border-radius: 0px;
+    font-size: 16px;
+    margin: 30px auto 0;
+    color: var(--g-text-color);
+    border-radius: 20px;
+
+    &:hover{
+      opacity: 0.8;
+      color: var(--g-text-color);
+    }
+  }
+
+  .login-option {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+
+    .weibo {
+      cursor: pointer;
+    }
+
+    .weibo {
+      &:hover {
+        background-color: #f9752f;
+      }
+    }
+  }
+
+  .agreement,
+  .tips {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 20px;
+    color: var(--text-color-medium);
+  }
+}

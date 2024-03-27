@@ -1,69 +1,68 @@
 #fm-box {
-    width: 270px;
-    position: relative;
+  width: 270px;
+  position: relative;
 
-    .info-header {
+  .info-header {
+    display: flex;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f5f7fa;
+    padding: 10px;
+    border-radius: 0px;
+
+    .status-box {
+      width: 100px;
+      height: 40px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin-bottom: 5px;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 0px;
+      transition: all 0.3s;
+    }
+
+    .disabled {
+      // background-color: #d9d9d987;
+      cursor: not-allowed;
+      color: #999;
+    }
+  }
+
+  .ant-radio-button-wrapper {
+    border: none;
+  }
+
+  .fm-list {
+    height: 300px;
+    overflow: hidden;
+    margin-top: 10px;
+
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0;
+
+      .fm-item {
         display: flex;
-        display: flex;
+        justify-content: center;
         align-items: center;
-        justify-content: space-between;
+        width: 80px;
+        height: 80px;
+        margin: 5px;
         background: #f5f7fa;
-        padding: 10px;
-        border-radius: 0px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
 
-        .status-box {
-            width: 100px;
-            height: 40px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            margin-bottom: 5px;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 0px;
-            transition: all .3s;
-        }
-
-        .disabled {
-            // background-color: #d9d9d987;
-            cursor: not-allowed;
-            color: #999;
-        }
+      .active {
+        color: #fff;
+        background: linear-gradient(-84deg, #1ab6ff 0, #1ab6ff 0, #028fff 100%);
+      }
     }
-
-    .ant-radio-button-wrapper {
-        border: none;
-    }
-
-    .fm-list {
-        height: 300px;
-        overflow: hidden;
-        margin-top: 10px;
-
-        .content {
-            display: flex;
-            flex-wrap: wrap;
-            padding: 0;
-
-            .fm-item {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 80px;
-                height: 80px;
-                margin: 5px;
-                background: #f5f7fa;
-                cursor: pointer;
-                transition: all .3s;
-            }
-
-            .active {
-                color: #fff;
-                background: linear-gradient(-84deg, #1AB6FF 0, #1AB6FF 0, #028FFF 100%);
-            }
-        }
-
-    }
+  }
 }

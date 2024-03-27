@@ -1,0 +1,22 @@
+.about-page{
+    :global{
+        .ant-card{
+            background-color: var(--bg-color);
+            color: var(--text-color-deep);
+            margin-bottom: 24px;
+        }
+        .ant-timeline-item-content{
+            color: var(--text-color-deep);
+        }
+        .ant-timeline-item-tail{
+            border-color: var(--comment-editor-input-color);
+        }
+        .ant-timeline-item-head{
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        .ant-timeline-item-last .ant-timeline-item-tail{
+            border-inline-start: 2px dotted var(--comment-editor-input-color) !important;
+        }
+    }
+}

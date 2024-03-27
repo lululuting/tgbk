@@ -1,0 +1,49 @@
+.banner {
+  margin: 10px 0 24px;
+  height: 150px;
+  border-radius: 0px;
+  overflow: hidden;
+}
+
+@media screen and (max-width: @screen-lg) {
+  .banner {
+    margin: 8px auto 24px !important;
+    padding: 0 24px !important;
+
+    .item-background {
+      border-radius: 0px;
+    }
+  }
+
+  .left-box {
+    padding: 0 24px !important;
+  }
+}
+
+@media screen and (max-width: @screen-md) {
+  .banner {
+    margin: 0 auto 15px !important;
+    padding: 0 15px !important;
+
+    .item-background {
+      border-radius: 0px;
+    }
+  }
+
+  .left-box {
+    padding: 0 15px !important;
+
+    .ant-card-body {
+      padding: 0 !important;
+    }
+  }
+
+}
+
+
+
+@media screen and (max-width: @screen-sm) {}
+
+
+
+@media screen and (max-width: @screen-xs) {}

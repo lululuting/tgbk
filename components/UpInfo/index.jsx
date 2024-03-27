@@ -1,137 +1,88 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-15 09:51:42
- * @LastEditTime: 2021-05-14 18:23:53
+ * @LastEditTime: 2022-12-20 15:15:59
  * @LastEditors: TingGe
  * @Description: 用户展示组件
  * @FilePath: /ting_ge_blog/components/UpInfo/index.jsx
  */
 
-import React, { useEffect } from 'react'
-import { Avatar, Card, Tag, Divider, Popover } from 'antd'
-import classnames from 'classnames'
-import Link from 'next/link'
-import IconFont from '@/components/IconFont'
-import {
-	QqOutlined,
-	WeiboOutlined,
-	GithubOutlined,
-	WechatOutlined,
-	EnvironmentOutlined,
-	TagsOutlined,
-	ToolOutlined
-  } from '@ant-design/icons';
-import './style.less'
+import React from 'react';
+import _ from 'lodash';
+import { Avatar, Card, Divider } from 'antd';
+import classnames from 'classnames';
+import Link from 'next/link';
+import Contact from '@/components/Contact';
+import SvgIcon from '@/components/SvgIcon';
+import styles from './style.module.less';
 
 const UpInfo = ({ data, link, children }) => {
+  return (
+    <Card
+      className={classnames(styles['up-info'])}
+      bordered={false}
+      bodyStyle={{ padding: 0 }}
+    >
+      {link ? (
+        <>
+          <Link href="/userCenter/[id]" as={`/userCenter/${data.id}`}>
+            <a className={styles['user-avatar-box']}>
+              <Avatar size={100} src={data.avatar + '?imageslim'}></Avatar>
+            </a>
+          </Link>
+          <Link href="/userCenter/[id]" as={`/userCenter/${data.id}`}>
+            <a>
+              <p className={styles['up-name']}>{data.userName}</p>
+            </a>
+          </Link>
+        </>
+      ) : (
+        <>
+          <Avatar size={100} src={data.avatar + '?imageslim'}></Avatar>
+          <p className={styles['up-name']}>{data.userName}</p>
+        </>
+      )}
 
-	useEffect(() => {
+      <p className={styles['up-autograph']}>{data.autograph}</p>
 
-	}, [])
+      {data?.post ? (
+        <p className={styles['up-post']}>
+          <SvgIcon name="iconbangong"/>
+          {data.post}
+        </p>
+      ) : null}
 
-	const switchType = (type) => {
-		switch (type) {
-			case 'bilibili':
-				return (
-					<Avatar size={28} icon={<IconFont type="iconbilibili-line" />} className={classnames("contact-icon bilibili")} />
-				)
-			case 'weibo':
-				return (
-					<Avatar size={28} icon={<WeiboOutlined />} className={classnames("contact-icon weibo")} />
-				)
-			case 'github':
-				return (
-					<Avatar size={28} icon={<GithubOutlined />} className={classnames("contact-icon github")} />
-				)
-			case 'qq':
-				return (
-					<Avatar size={28} icon={<QqOutlined />} className={classnames("contact-icon qq")} />
-				)
-			case 'wx':
-				return (
-					<Avatar size={28} icon={<WechatOutlined />} className={classnames("contact-icon wx")} />
-				)
-		}
-	}
-                                                           
-	return (
-		<Card className={classnames('up-info')} bordered={false} bodyStyle={{ padding: 0 }}>
-			<Choose>
-				<When condition={link}>
-					<Link href='/userCenter/[id]' as={`/userCenter/${data.id}`}>
-						<a className="user-avatar-box">
-							<Avatar size={100} src={data.avatar + '?imageslim'}></Avatar>
-						</a>
-					</Link>
+      {data?.address ? (
+        <p className={styles['up-address']}>
+          <SvgIcon name="icondingwei"/>
+          {data.address}
+        </p>
+      ) : null}
 
-					<Link href='/userCenter/[id]' as={`/userCenter/${data.id}`}>
-						<a>
-							<p className="up-name">{data.userName}</p>
-						</a>
-					</Link>
-				</When>
-				<Otherwise>
-					<Avatar size={100} src={data.avatar + '?imageslim'}></Avatar>
-					<p className="up-name">{data.userName}</p>
-				</Otherwise>
-			</Choose>
+      {!_.isEmpty(data?.tags) ? (
+        <div className={styles['up-tags']}>
+          <SvgIcon name="iconbiaoqian"/>
+          <div>
+            {_.map(data.tags.split(','), (item, index) => {
+              return <span className={styles['tag-item']} key={index}>
+                {item}
+              </span>;
+            })}
+          </div>
+        </div>
+      ) : null}
 
-			<p className="up-autograph">{data.autograph}</p>
+      {!_.isEmpty(data?.contact) ? (
+        <>
+          <Divider>联系方式</Divider>
+          <div style={{ paddingBottom: 20 }}>
+            <Contact value={data.contact} isEdit={false} />
+          </div>
+        </>
+      ) : null}
+      {children}
+    </Card>
+  );
+};
 
-			<If condition={data.post}>
-				<p className="up-post">
-					<ToolOutlined />
-					{data.post}
-				</p>
-			</If>
-
-			<If condition={data.address}>
-				<p className="up-address">
-					<EnvironmentOutlined />
-					{data.address}
-				</p>
-			</If>
-
-			<If condition={data.tags && data.tags.length > 0}>
-				<div className="up-tags">
-					<TagsOutlined />
-					<div>
-						<For each="i" index="k" of={data.tags}>
-							<Tag color="blue" key={k}>{i}</Tag>
-						</For>
-					</div>
-				</div>
-			</If>
-
-			<If condition={data.contact && data.contact.length}>
-				<Divider>联系方式</Divider>
-			</If>
-
-			<div style={{ paddingBottom: 20 }}>
-				<If condition={data.contact && data.contact.length}>
-					<For each="item" index="index" of={data.contact}>
-						<a href={item.link && item.link} target="_blank" key={index}>
-							{
-								item.code ?
-									<Popover placement="bottom" content={
-										<div className="re-code">
-											<div className="re-code"><img src={item.code} alt="" /></div>
-										</div>
-									}>
-										{(switchType(item.type))}
-									</Popover>
-									: switchType(item.type)
-							}
-						</a>
-					</For>
-				</If>
-			</div>
-
-			{children}
-		</Card>
-
-	)
-}
-
-export default UpInfo
-
+export default UpInfo;

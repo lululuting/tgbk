@@ -1,252 +1,189 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-20 10:03:02
- * @LastEditTime: 2021-03-17 10:06:31
+ * @LastEditTime: 2024-03-26 17:45:37
  * @LastEditors: TingGe
  * @Description: 列表页
- * @FilePath: /ting_ge_blog/pages/list/index.jsx
+ * @FilePath: /ting_ge_blog/pages/list/[type].jsx
  */
 
-import React, { useState, useEffect } from 'react'
-import Head from '@/components/Head'
-import { Row, Col, Card, } from 'antd'
-import classnames from 'classnames'
-import request from '@/public/utils/request'
-import serviceApi from '@/config/service'
-import ArticeList from '@/components/ArticeList'
-import LazyImg from '@/components/LazyImg'
-import {
-	ExperimentOutlined,
-	CameraOutlined,
-	CoffeeOutlined,
-	SwapOutlined,
-} from '@ant-design/icons'
-import './style.less'
+import React, { useState, useEffect } from 'react';
+import Head from '@/components/Head';
+import { connect } from 'react-redux';
+import { Row, Col } from 'antd';
+import { baseQueryList } from '@/public/utils/baseRequest';
+import serviceApi from '@/config/service';
+import ArticleList from '@/components/ArticleList';
+import Advert from '@/components/Advert';
+import PageLeftCard from '@/components/PageLeftCard';
+import LazyImg from '@/components/LazyImg';
+import { dictToArr, dict } from '@/public/utils/dict';
+import _ from 'lodash';
+import styles from './style.module.less';
 
-const ListPage = (porps) => {
+const ListPage = (props) => {
+  const [listData, setListData] = useState(props.listData || []);
+  const [tabKey, setTabKey] = useState(props.type);
+  const [bannerData] = useState(props.banner);
+  // 页数
+  const [page, setPage] = useState(1);
+  const [isNoData, setIsNoData] = useState(false);
+  const [listSort, setListSort] = useState(false);
 
-	const [listData, setListData] = useState(porps.listData)
-	const [tabKey, setTabKey] = useState(porps.tabIndex)
-	const [bannerData, setBannerData] = useState(porps.banner)
-	// 广告
-	const [advert, setAdvert] = useState(porps.advertList)
-	// 页数
-	const [page, setPage] = useState(1)
-	const [loadMoreLoading, setLoadMoreLoading] = useState(false)
-	const [isNoData, setIsNoData] = useState(false)
-	const [listSort, setListSort] = useState(true)
+  /**
+   * 查询列表
+   * @description: 查询列表方法
+   * @param
+   * @return: 文章列表
+   */
+  const queryList = async ({ type, sort, page }) => {
+    return baseQueryList(serviceApi.getArticleList, {
+      filters: {
+        type: (type !== undefined ? type : tabKey)
+      },
+      page: page || 1,
+      limit: 5,
+      orderBy: (sort !== undefined ? sort : listSort) ? [['viewCount', 'desc'], ['id', 'desc']] : [['id', 'desc']]
+    });
+  };
 
-	useEffect(() => {
-		queryLsit(porps.tabIndex, 1, 5, listSort).then((res) => {
-			setListData(res.data)
-		})
-		setTabKey(porps.tabIndex)
-	}, [porps.tabIndex])
 
-	// 切换排序
-	const listSortFn = () => {
-		queryLsit(tabKey, 1, 5, !listSort).then((res) => {
-			setListData(res.data)
-			setLoadMoreLoading(false)
-		})
+  // 2022.03.06  处理头部点击分类列表时，只会改变路由但不会触发页面重新渲染
+  useEffect(() => {
+    setListData(props.listData || []);
+    setTabKey(props.type * 1);
+  }, [props.type]);
 
-		setListSort(!listSort)
-		setPage(1)
-		setLoadMoreLoading(true)
-	}
+  // 切换排序
+  const listSortFn = (sort) => {
+    queryList({
+      sort
+    }).then((res) => {
+      setListData(res?.data?.list || []);
+    });
 
-	/**
-	* 查询列表方法
-	* @description: 公用查询列表方法
-	* @param { type page limit listSort }
-	* @return: 文章列表/用户列表
-	*/
-	const queryLsit = (tabKey, page, limit, listSort) => {
-		return new Promise((resolve, reject) => {
-			request(serviceApi.getTypeList, {
-				method: 'get',
-				params: {
-					type: tabKey === '0' ? null : tabKey,
-					page: page,
-					limit: limit,
-					sort: listSort ? 0 : 1
-				}
-			}).then((res) => {
-				resolve(res)
-			})
-		})
-	}
+    setListSort(sort);
+    setPage(1);
+    setIsNoData(false);
+  };
 
-	// 加载更多
-	const loadMore = () => {
-		setPage(page + 1)
-		setLoadMoreLoading(true)
+  // 加载更多
+  const loadMore = () => {
+    queryList({
+      page: page + 1
+    }).then((res) => {
+      if (_.isEmpty(_.get(res, 'data.list'))) {
+        setIsNoData(true);
+        return;
+      }
+      setListData([].concat(listData, res?.data?.list || []));
+    });
+    setPage(page + 1);
+  };
 
-		queryLsit(tabKey, page + 1, 5, listSort).then((res) => {
-			if (!res.data.length) {
-				setLoadMoreLoading(false)
-				setIsNoData(true)
-				return
-			}
-			setListData([].concat(listData, res.data))
-			setLoadMoreLoading(false)
-		})
-	}
+  // 切换
+  const tabKeyChang = (key) => {
+    queryList({
+      type: key
+    }).then((res) => {
+      setListData(res?.data?.list || []);
+    });
+    setPage(1);
+    setIsNoData(false);
+    setTabKey(key);
 
-	// 切换
-	const tabKeyChang = (key) => {
-		queryLsit(key, 1, 5, listSort).then((res) => {
-			setListData(res.data)
-			setLoadMoreLoading(false)
-		})
+    // 改变地址栏url
+    if (window) {
+      window.history.pushState(null, null, key);
+    }
+  };
 
-		setPage(1)
-		setLoadMoreLoading(true)
-		setIsNoData(false)
-		setTabKey(key)
-	}
+  return (
+    <>
+      <Head>
+        <title>挺哥博客-文章列表</title>
+      </Head>
 
-	const operationTabList = [
-		{
-			key: '0',
-			tab: (
-				<span>
-					全部
-				</span>
-			),
-		},
-		{
-			key: '1',
-			tab: (
-				<span>
-					<ExperimentOutlined />
-					技术
-				</span>
-			),
-		},
-		{
-			key: '2',
-			tab: (
-				<span>
-					<CameraOutlined />
-					摄影
-				</span>
-			),
-		},
-		{
-			key: '3',
-			tab: (
-				<span>
-					<CoffeeOutlined />
-					生活
-				</span>
-			),
-		},
-	];
+      <>
+        <div className={styles['banner']}>
+          <LazyImg background params="?imageslim" src={bannerData?.url} />
+        </div>
+        <Row>
+          {/* 列表 */}
+          <Col className={styles['left-box']} xs={24} sm={24} md={24} lg={18}
+            xl={18}
+          >
+            <PageLeftCard
+              bordered={false}
+              tabList={
+                _.map(dictToArr('articleType'), (item) => {
+                  return {
+                    key: item.value,
+                    tab: <span>{item.label}</span>
+                  };
+                })
+              }
+              activeTabKey={tabKey}
+              onTabChange={tabKeyChang}
+              sortFn={listSortFn}
+            >
+              <ArticleList
+                loadMore={loadMore}
+                isNoData={isNoData}
+                loading={props.listLoading}
+                data={listData}
+              />
+            </PageLeftCard>
+          </Col>
 
-	return (
-		<>
-			<Head>
-				<title>挺哥博客-文章列表</title>
-			</Head>
+          <Col xs={0} sm={0} md={0} lg={6} xl={6}
+            style={{ paddingLeft: 24 }}
+          >
+            <Advert />
+          </Col>
+        </Row>
+      </>
+    </>
+  );
+};
 
-			<>
-				<div className="banner">
-					<LazyImg background={true} params="?imageslim" src={bannerData && bannerData.url && bannerData.url} />
-				</div>
-				<Row>
-					{/* 列表 */}
-					<Col id='left-box' xs={24} sm={24} md={24} lg={18} xl={18} >
-						<div className={classnames('list-nav')}>
-							<Card
-								bordered={false}
-								tabList={operationTabList}
-								activeTabKey={tabKey}
-								onTabChange={tabKeyChang}
-								tabBarExtraContent={
-									<span onClick={listSortFn} className="switch-btn">
-										<SwapOutlined style={{ color: '#1890ff', marginRight: 10 }} />
-										切换为
-										{
-											listSort ? '热门排序' : '时间排序'
-										}
-									</span>
-								}
-							>
-								<ArticeList
-									loadMore={loadMore}
-									isNoData={isNoData}
-									loading={loadMoreLoading}
-									data={listData}
-								/>
-							</Card>
-						</div>
-					</Col>
+export async function getServerSideProps (context) {
+  // topbanner
+  const bannerPromise = new Promise((resolve) => {
+    baseQueryList(serviceApi.getBannerList, {
+      filters: {
+        type: _.get(dict, 'bannerType.list'),
+        status: _.get(dict, 'commonStatus.yes')
+      },
+      limit: 1
+    }).then((res) => {
+      resolve(res?.data?.list[0] || null);
+    });
+  });
 
-					<Col xs={0} sm={0} md={0} lg={6} xl={6} style={{ paddingLeft: 24 }}>
+  // list
+  const listPromise = new Promise((resolve) => {
+    baseQueryList(serviceApi.getArticleList, {
+      filters: {
+        type: context.query.type || _.get(dict, 'articleType.all')
+      },
+      limit: 5
+    }).then((res) => {
+      resolve(res?.data?.list || []);
+    });
+  });
 
-						{/* 广告位 */}
-						<div className="advert-list">
+  let banner = await bannerPromise;
+  let listData = await listPromise;
+  let type = context.query.type;
 
-							<For each="item" of={advert}>
-								<Card
-									style={{ marginBottom: 20 }}
-									bordered={false}
-									key={item.id}
-								>
-									<p style={{ fontWeight: 'bold' }}>广告</p>
-									<a href={item.link}>
-										<img style={{ width: '100%' }} src={item.url} params="?imageslim" alt={item.title} />
-									</a>
-								</Card>
-							</For>
-						</div>
-					</Col>
-				</Row>
-			</>
-		</>
-	)
+  return { props: { type, banner, listData } };
 }
 
-export async function getServerSideProps(context) {
+const stateToProps = (state) => {
+  return {
+    listLoading: state.getArticleListLoading
+  };
+};
 
-	// 广告
-	const promise1 = new Promise((resolve) => {
-		request(serviceApi.getAdvertList, {
-			method: 'get',
-		}).then((res) => {
-			resolve(res.data)
-		})
-	})
-
-	// topbanner
-	const promise2 = new Promise((resolve) => {
-		request(serviceApi.getListBanner).then((res) => {
-			resolve(res.data[0])
-		})
-	})
-
-	// list
-	const promise3 = new Promise((resolve) => {
-		request(serviceApi.getTypeList, {
-			method: 'get',
-			params: {
-				type: context.query.type === '0' ? null : context.query.type,
-				page: 1,
-				limit: 5,
-				sort: 0
-			}
-		}).then((res) => {
-			resolve(res.data)
-		})
-	})
-
-	let advertList = await promise1
-	let banner = await promise2
-	let listData = await promise3
-	let tabIndex = context.query.type
-
-	return { props: { tabIndex, advertList, banner, listData } }
-}
-
-export default ListPage
+export default connect(stateToProps, null)(ListPage);

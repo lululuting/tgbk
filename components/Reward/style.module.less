@@ -1,0 +1,74 @@
+.reward {
+  margin: 50px auto;
+  text-align: center;
+
+  .tips{
+    color: var(--text-color-medium);
+  }
+
+  .reward-btn{
+    width: 100px;
+    height: 30px;
+    background: #FEA227;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 12px;
+    margin: 0 auto;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    cursor: pointer;
+  }
+}
+
+.reward-modal {
+  .reward-code-box {
+    width: 252px;
+    height: 300px;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .action-box {
+    text-align: center;
+    padding: 10px 0;
+
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    :global {
+      .ant-radio-wrapper-checked {
+        .wx {
+          .anticon {
+            color: #2bad13;
+          }
+        }
+        .zfb {
+          .anticon {
+            color: #00a3ee;
+          }
+        }
+      }
+    }
+    
+    .anticon {
+      margin-right: 10px;
+    }
+
+    .ant-radio-inner {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,437 @@
+.detail-box {
+  .cover-box {
+    position: relative;
+    padding: 20px;
+    background: var(--list-img-bg-color);
+    display: block;
+    margin-bottom: 20px;
+    margin-top: 5px;
+
+    .b-cover {
+      height: 300px;
+      overflow: hidden;
+
+      .item-background {
+        filter: blur(12px);
+        object-fit: cover;
+        transform: scale(1.2);
+      }
+    }
+
+    .s-cover {
+      width: 400px;
+      height: 270px;
+      position: absolute;
+      right: 100px;
+      top: 185px;
+      padding: 20px;
+      background:  var(--list-img-bg-color);
+      z-index: 2;
+    }
+  }
+
+  .article-title{
+    color: var(--text-color-deep);
+  }
+
+  .nav-title {
+    font-size: 16px;
+    padding-left: 16px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    color: var(--g-primary-color);
+    display: flex;
+    align-items: center;
+  }
+
+
+  .user-nav {
+    display: flex;
+    align-items: center;
+    color: var(--text-color-deep);
+  }
+
+  // 滚动条美化
+  ::-webkit-scrollbar-track-piece {
+    //滚动条凹槽的颜色，还可以设置边框属性
+    background-color: var(--border-color);
+  }
+
+  ::-webkit-scrollbar {
+    //滚动条的宽度
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    //滚动条的设置
+    background-color: var(--border-color);
+    // background-color: #dddddd;
+    background-clip: padding-box;
+    min-height: 28px;
+    border-radius: 0px;
+
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    // background-color: #bbb;
+    background-color: var(--border-color);
+    opacity: 0.8;
+  }
+
+  .content-box {
+    padding: 24px;
+    margin: 0 24px;
+    border-radius: 0px;
+    // background-color: #fff;
+    background-color: var(--bg-color);
+    // box-shadow: 0 2px 20px 0 rgba(18, 141, 244, 0.08);
+    font-size: 14px;
+    line-height: 2;
+    // color: rgb(66, 66, 66);
+    color: var(--text-color-medium);
+    
+
+    .detailed-content {
+      a {
+        color: #1890ff;
+
+        &:hover {
+          color: #1890ff;
+        }
+      }
+
+      // iframe
+      .meta-media {
+        position: relative;
+        margin-bottom: 30px;
+        float: left;
+        width: 100%;
+        height: 0;
+        padding-bottom: 75%;
+
+        .video {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          top: 0;
+        }
+      }
+
+      // 图片设置
+      img {
+        max-width: 100%;
+        display: block;
+        height: auto !important;
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        // border-left: 4px solid #1890ff;
+        padding-left: 20px;
+        line-height: 1.5;
+        margin: 20px 0;
+        font-weight: bold;
+        position: relative;
+
+        &::after {
+          content: '';
+          // display: none;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 6px;
+          height: 100%;
+          background: var(--g-primary-color);
+          border-top-right-radius: 4px;
+          border-bottom-right-radius: 4px;
+          box-shadow: 1px 0 12px 0 var(--secondary-color);
+        }
+      }
+
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      h3 {
+        font-size: 16px;
+      }
+    }
+  }
+
+
+  .ant-anchor-ink-ball {
+    width: 2px !important;
+    height: 36px !important;
+    background-color: #1890ff !important;
+    border: none !important;
+    border-radius: 0px !important;
+  }
+
+  .left-card {
+    background-color: var(--bg-color);
+    
+    :global {
+      .ant-card-body {
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .ant-popover-inner{
+        background-color: var(--bg-color);
+      }
+
+      .ant-popover-inner-title{
+        color: var(--text-color-deep);
+      }
+    }
+
+    .active {
+      :global {
+        .anticon.anticon-like {
+          animation: like 1s;
+        }
+      }
+    }
+  }
+
+  .contact-icon {
+    margin: 10px 5px;
+    transition: all .3s;
+    cursor: pointer;
+  }
+
+  .detailed-nav {
+    background-color: var(--bg-color);
+    padding: 10px;
+    overflow: hidden;
+    border-radius: 8px;
+
+    .toc-list {
+      color: var(--text-color-medium);
+
+      &>ul {
+        position: relative;
+        list-style: none;
+
+        li {
+          list-style: none;
+        }
+
+        &::before {
+          position: absolute;
+          display: block;
+          width: 1px;
+          height: 100%;
+          margin: 0 auto;
+          background-color: var(--border-color);
+          content: ' ';
+        }
+
+        span {
+          padding: 3px 10px;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          position: relative;
+          transition: all 0.3s;
+          flex: 1;
+          overflow: hidden;
+
+          & span {
+            display: inline-block;
+            width: 200px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          &:hover {
+            color: var(--g-primary-colo) !important;
+          }
+
+          &::after {
+            position: absolute;
+            content: '';
+            width: 2px;
+            height: 100%;
+            top: 0;
+            right: 0;
+            left: 0;
+            border-right: 2px solid transparent;
+            opacity: 0;
+            border-radius: 0px;
+            transition: all .3s;
+          }
+        }
+      }
+
+      :global{
+        .vditor-outline__action {
+          margin-left: 2px;
+          margin-right: 0;
+        }
+    
+        .vditor-outline__item--current {
+          background-color: var(--option-hover-color);
+          color: var(--g-primary-color);
+          position: relative;
+    
+          &::after {
+            opacity: 1 !important;
+            border-color: var(--g-primary-color) !important;
+          }
+        }
+      }
+    }
+  }
+
+  .opacity {
+    animation: .5s ani linear;
+    -webkit-animation: .5s ani linear;
+    -moz-animation: .5s ani linear;
+  }
+
+  :global {
+    #preview {
+      font-size: 14px;
+      color: var(--text-color-deep);
+      
+      p{
+        line-height: 1.8;
+      }
+
+      .vditor-copy span {
+        top: -22px;
+        right: 10px;
+      }
+
+      svg {
+        fill: currentColor;
+        display: inline-block;
+        stroke: currentColor;
+      }
+
+      p>code {
+        display: inline-block;
+        background-color: #fff5f5 !important;
+        border-radius: 0px;
+        font-size: 13px;
+        padding: 2px 5px;
+        color: #ff502c;
+        margin: 0px 3px;
+        line-height: 1.1rem;
+        word-wrap: break-word;
+        word-break: break-all;
+      }
+
+      code {
+        border-radius: 0px !important;
+      }
+
+      pre:before {
+        content: '';
+        display: block;
+        background: url(//cdn.lululuting.com/upic/point.png);
+        height: 32px;
+        width: 100%;
+        background-size: 44px;
+        background-repeat: no-repeat;
+        background-color: #2b2b2b;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        background-position: 10px 10px;
+      }
+    }
+  }
+
+}
+
+
+@media screen and (max-width: @screen-lg) {
+  .cover-box {
+    display: none !important;
+  }
+
+  .detail-box {
+    .info {
+      padding: 0 24px !important;
+
+    }
+
+    .left-side {
+      position: fixed;
+      z-index: 99 !important;
+      left: 5px !important;
+
+      .ant-affix {
+        bottom: 20px;
+        top: auto !important;
+      }
+    }
+  }
+}
+
+.qr-code{
+  :global {
+    .ant-popover-inner{
+      text-align: center;
+    }
+  }
+}
+
+.qr-code,
+.share-to{
+  :global {
+    .ant-popover-inner,
+    .ant-popover-arrow:before{
+      background-color: var(--bg-color);
+    }
+    .ant-popover-title{
+      color: var(--text-color-deep);
+    }
+  }
+}
+
+@media screen and (max-width: @screen-md) {
+
+  .detail-box {
+    .info {
+      padding: 0 15px !important;
+    }
+
+    .ant-typography {
+      font-size: 28px !important;
+    }
+
+    .content-box {
+      margin: 0 15px 0 !important;
+      padding: 15px !important;
+    }
+
+    .left-side {
+
+      .ant-scroll-number {
+        display: none !important;
+      }
+
+      .share {
+        display: none !important;
+      }
+    }
+  }
+
+}
+
+@media screen and (max-width: @screen-xs) {}

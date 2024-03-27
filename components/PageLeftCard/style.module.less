@@ -1,0 +1,44 @@
+
+.list-nav {
+  border-radius: 0px;
+  overflow: hidden;
+
+  :global{
+    .ant-card {
+      background-color: var(--bg-color);
+    }
+    .ant-card-head {
+      padding: 24px;
+      // border-bottom: none;
+    }
+
+    .ant-list-vertical .ant-list-item-meta {
+      margin-bottom: 0;
+    }
+
+    .ant-tabs .ant-tabs-large-bar .ant-tabs-tab {
+      padding: 16px 5px;
+    }
+    .ant-tabs-nav-wrap .ant-tabs-tab {
+      padding: 0;
+    }
+    .ant-tabs-nav::before{
+      border-color: var(--transparent-color);
+    }
+    .ant-tabs-nav .ant-tabs-tab-active {
+      padding: 0;
+      font-weight: bold;
+      .ant-tabs-tab-btn{
+        color: var(--g-primary-color);
+      }
+    } 
+
+    .ant-tabs-ink-bar{
+      display: none;
+    }
+
+    .ant-tabs-tab-btn{
+      color: var(--text-color-deep);
+    }
+  }
+}

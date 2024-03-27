@@ -1,0 +1,31 @@
+.admin-layout {
+  display: flex;
+  .left-menu {
+    margin-right: 24px;
+    :global{
+      .ant-menu-light {
+        color: var(--text-color-deep);
+        background: var(--bg-color);
+      }
+      .ant-menu-submenu-selected >.ant-menu-submenu-title{
+        color: var(--g-primary-color);
+      }
+
+      .ant-menu-light .ant-menu-item-selected{
+        color: var(--g-primary-color);
+        background-color: var(--option-hover-color);
+      }
+      .ant-menu-light .ant-menu-item:hover:not(.ant-menu-item-selected):not(.ant-menu-submenu-selected){
+        color: var(--g-primary-color);
+        background-color: var(--option-hover-color);
+      }
+      .ant-menu-submenu-title:hover:not(.ant-menu-item-selected):not(.ant-menu-submenu-selected){
+        color: var(--g-primary-color);
+        background-color: var(--option-hover-color);
+      }
+      .ant-menu-item:not(.ant-menu-item-selected):hove{
+        background-color: var(--option-hover-color);
+      }
+    }
+  }
+}

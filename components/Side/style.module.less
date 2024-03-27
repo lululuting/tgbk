@@ -1,0 +1,32 @@
+.side {
+  position: fixed;
+  bottom: 10%;
+  // right: 100px;
+  margin-left: 1220px;
+  z-index: 999;
+
+  .ant-back-top {
+    position: initial;
+  }
+
+  .action-btn {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    background: var(--bg-color);
+    color: var(--text-color-deep);
+    margin-top: 10px;
+    border-radius: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // box-shadow: 0 2px 20px 0 rgba(18, 141, 244, 0.08);
+    position: relative;
+    transition: all 0.3s;
+
+    &:hover {
+      color: var(--g-primary-color);
+      opacity: 0.8;
+    }
+  }
+}

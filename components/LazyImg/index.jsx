@@ -1,71 +1,52 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-15 09:51:42
- * @LastEditTime: 2021-06-05 14:54:17
+ * @LastEditTime: 2023-06-14 15:55:49
  * @LastEditors: TingGe
- * @Description: 
- * 	props.src 			src
- * 	props.className 	className
- * 	props.style 		样式
- * 	props.param 		连接后参数
- * 	props.alt 			alt
- *  props.onClcik		funtion
+ * @Description:
+ *  props.background  背景图模式
  * @FilePath: /ting_ge_blog/components/LazyImg/index.jsx
  */
 
-import React, { useState, useEffect } from 'react'
-import classnames from 'classnames'
-import './style.less'
+// import classnames from 'classnames';
+import Image from 'next/image';
+import styles from './style.module.less';
 
 const LazyImg = (props) => {
+  let src = props.src;
+  
+  if(/^\/\//.test(src)){
+    src = 'https:'+props.src;
+  }
+  if (props.crop && props.width && props.height) {
+    src = `${src}?imageView2/1/w/${props.width}/h/${props.height}`;
+  }
 
-	const [done, setDone] = useState(false)
-	useEffect(() => {
-		const img = new Image();
-		// 发出请求，请求图片
-		img.src = props.src;
-		// 当图片加载完毕
-		img.onload = () => {
-			setDone(true)
-		}
-	}, [])
+  const otherProps = {...props};
+  if(otherProps.background){
+    delete otherProps.background;
+  }
 
-	return (
-		<>
-			<Choose>
-				<When condition={done}>
-					<Choose>
-						<When condition={props.background}>
-							<div
-								style={props.style && props.style, { backgroundImage: `url(${props.src + (props.params ? props.params : '')})` }}
-								className={classnames(`item-background ${props.className ? props.className : ''}`)}
-								onClick={props.onClick ? props.onClick() : null}
-							>
-								{props.children ? props.children : null}
-							</div>
-						</When>
-						<Otherwise>
-							<img
-								style={props.style && props.style} src={props.src + (props.params ? props.params : '')}
-								alt={props.alt}
-								className={classnames(`item-img ${props.className ? props.className : ''}`)}
-								onClick={props.onClick ? props.onClick : null}
-							/>
-						</Otherwise>
-					</Choose>
-				</When>
-
-				<Otherwise>
-					<div className="cp-preloader cp-preloader_type1">
-						<span className="cp-preloader__letter" data-preloader="挺">挺</span>
-						<span className="cp-preloader__letter" data-preloader="哥">哥</span>
-						<span className="cp-preloader__letter" data-preloader="博">博</span>
-						<span className="cp-preloader__letter" data-preloader="客">客</span>
-					</div>
-				</Otherwise>
-			</Choose>
-		</>
-	)
-}
-
-export default LazyImg
+  return (
+    <>
+      {props.background
+        ? (
+          <div className={styles['background-box']} {...otherProps}>
+            {props.children ? props.children : null}
+            <Image
+              layout="fill"
+              objectFit="cover"
+              src={src}
+            />
+          </div>)
+        : (
+          <Image
+            {...props}
+            src={src}
+          />
+        )
+      }
+    </>
+  );
+};
+export default LazyImg;

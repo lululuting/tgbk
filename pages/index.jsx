@@ -1,120 +1,128 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-15 10:35:31
- * @LastEditTime: 2021-06-04 21:30:39
+ * @LastEditTime: 2023-06-14 16:15:14
  * @LastEditors: TingGe
  * @Description: 首页
  * @FilePath: /ting_ge_blog/pages/index.jsx
  */
 
-import React, { useState, useRef } from 'react'
-import Head from 'next/head'
-import { connect } from 'react-redux'
-import { Row, Col, Carousel, Card } from 'antd'
-import classnames from 'classnames'
-import serviceApi from '@/config/service'
-import request from '@/public/utils/request'
-import UpInfo from '@/components/UpInfo'
-import ArticeList from '@/components/ArticeList'
-import LazyImg from '@/components/LazyImg'
-import { LeftOutlined, RightOutlined } from '@ant-design/icons'
-import '@/public/style/index.less'
+import React, { useState, useRef, useEffect } from 'react';
+import _ from 'lodash';
+import Head from 'next/head';
+import { connect } from 'react-redux';
+import { Row, Col, Carousel, Card } from 'antd';
+import classnames from 'classnames';
+import serviceApi from '@/config/service';
+import request from '@/public/utils/request';
+import UpInfo from '@/components/UpInfo';
+import ArticleList from '@/components/ArticleList';
+import PageLeftCard from '@/components/PageLeftCard';
+import Advert from '@/components/Advert';
+import LazyImg from '@/components/LazyImg';
+import SvgIcon from '@/components/SvgIcon';
+import { dict } from '@/public/utils/dict';
+import { baseQueryList } from '@/public/utils/baseRequest';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import styles from '@/public/styles/index.module.less';
 
 const Home = (props) => {
-
   // 轮播图
-  const [bannerData, setBannerData] = useState(props.banenrList.banner)
-  const [topBanner, setTopBanner] = useState(props.banenrList.topBanner)
+  const [bannerData] = useState(props.bannerList.banner);
+  const [topBanner] = useState(props.bannerList.topBanner);
   const bannerRef = useRef();
 
   // 推荐
-  const [rightBanner, setRightBanner] = useState(props.banenrList.rightBanner)
+  const [rightBanner] = useState(props.bannerList.rightBanner);
 
   // 广告
-  const [advert, setAdvert] = useState(props.banenrList.advert)
+  const [advert] = useState(props.bannerList.advert);
 
-  // tabkey
-  const [tabKey, setTabKey] = useState('0')
+  // sort
+  const [listSort, setListSort] = useState(false);
 
   // 文章列表
-  const [articleList, setArticleList] = useState(props.list)
+  const [articleList, setArticleList] = useState(props.articleList);
 
-  const [upList, setUpList] = useState(props.userList)
+  const [upList] = useState(props.userList);
 
-  const [energyData, setEnergyData] = useState(props.energy)
+  const [energyData] = useState(props.energy);
 
   // 页数
-  const [page, setPage] = useState(1)
-  const [isNoData, setIsNoData] = useState(false)
+  const [page, setPage] = useState(1);
+  const [isNoData, setIsNoData] = useState(false);
 
-  // swiper配置
-  const swiperOption = {
+  // swipe配置
+  const swipeOption = {
     touchMove: true,
     speed: 1000,
     autoplaySpeed: 5000,
-    draggable: true,
+    draggable: true
     // effect: "fade"
-  }
+  };
+
+
+  /**
+   * 查询列表
+   * @description: 查询列表方法
+   * @param
+   * @return: 文章列表
+   */
+  const queryList = async ({ page, sort}) => {
+    return baseQueryList(serviceApi.getArticleList, {
+      status: _.get(dict, 'commonStatus.yes'),
+      state: _.get(dict, 'commonStatus.yes'),
+      page: page || 1,
+      limit: 5,
+      orderBy: (sort !== undefined ? sort : listSort) ? [['viewCount', 'desc'], ['id', 'desc']] : [['id', 'desc']]
+    });
+  };
 
 
   // 加载更多
   const loadMore = () => {
-    setPage(page + 1)
-
-    request(serviceApi.getArticleList, {
-      method: 'get',
-      params: {
-        id: tabKey,
-        page: page + 1,
-        limit: 5,
-      }
-    }).then((res) => {
-      if (!res.data.length) {
-        setIsNoData(true)
-        return
+    queryList({
+      page: page + 1
+    }).then((res)=>{
+      // 不满就是没有更多了
+      if (res.data?.list?.length !== 5) {
+        setIsNoData(true);
       }
 
-      setArticleList([].concat(articleList, res.data))
-    })
-  }
+      setArticleList([].concat(articleList, res?.data?.list || []));
+    });
 
+    setPage(page + 1);
+  };
 
   // 最新/最热 切换
-  const tabKeyChang = (key) => {
-    setTabKey(key)
-    setPage(1)
-    setIsNoData(false)
+  const sortChang = (sort) => {
+    queryList({
+      sort,
+      page: 1
+    }).then((res)=>{
+      setArticleList(res?.data?.list || []);
+    });
 
-    request(serviceApi.getArticleList, {
-      method: 'get',
-      params: {
-        id: key,
-        page: 1,
-        limit: 5,
-      }
-    }).then((res) => {
-      setArticleList(res ? res.data : [])
-    })
-  }
+    setPage(1);
+    setIsNoData(false);
+    setListSort(sort);
+  };
 
-  const operationTabList = [
-    {
-      key: '0',
-      tab: (
-        <span>
-          最 新
-        </span>
-      ),
-    },
-    {
-      key: '1',
-      tab: (
-        <span>
-          热 门
-        </span>
-      ),
-    },
-  ];
+  // 文字动画
+  useEffect(() => {
+    const text = document.querySelector('#energy');
+    text.innerHTML = text.textContent.replace(/\S/g, '<span>$&</span>');
+    const letters = document.querySelectorAll('#energy span');
+    let time = 0;
+
+    for (let i = 0; i < letters.length; i++) {
+      time += 200;
+      setTimeout(() => {
+        letters[i].classList.add('active');
+      }, time);
+    }
+  }, []);
 
   return (
     <>
@@ -123,198 +131,242 @@ const Home = (props) => {
       </Head>
 
       <>
-        <Row className="header-banner-box">
+        <Row className={styles['header-banner-box']}>
           <Col xs={0} sm={0} md={24}>
-            <div className="header-banner">
-              <LazyImg background={true} params="?imageslim" src={topBanner?.url || null} >
-                <div className="header-content">
-                  <a className="tips-text" href={topBanner?.link !== '无' ? topBanner.link : null} target="_blank">
-                    {topBanner?.title !== '无' ? topBanner.title : null}
-                  </a>
-                </div>
-              </LazyImg>
+            <div className={styles['header-banner']}>
+              {
+                topBanner?.type === _.get(dict,'bannerType.homeIframe') ?
+                <iframe src={topBanner?.url} className={styles['theme-page-box']} />
+                :
+                <React.Fragment>
+                  <LazyImg
+                    background
+                    src={topBanner?.url}
+                    alt={topBanner?.title}
+                    width={1920}
+                    height={200}
+                  /> 
+                    <div className={styles['header-content']}>
+                      {
+                      topBanner?.title ?
+                        <a
+                          className={styles['tips-text']}
+                          href={topBanner?.link}
+                          target="_blank"
+                          rel="noreferrer"
+                        >{topBanner.title}</a>
+                      :null
+                    }
+                  </div>
+                </React.Fragment>
+              }
             </div>
           </Col>
         </Row>
 
-        {/* banner */}
-        <Row className={classnames('wrap index-banner')}>
-          <Col xs={24} sm={24} md={17} >
-            <div
-              className={classnames('left')}
-              style={{ maxWidth: 830 }}
-            >
-              <Carousel 
+
+        <Row className={classnames('wrap', styles['index-banner'])}>
+          <Col xs={24} sm={24} md={17}>
+            <div className={styles['left']} style={{ maxWidth: 830 }}>
+              <Carousel
                 autoplay
-                {...swiperOption}
+                {...swipeOption}
                 ref={bannerRef}
                 lazyLoad
                 infinite
                 slidesToShow={1}
                 slidesToScroll={1}
               >
-                <For each="item" of={bannerData}>
-                  <a key={index} className="banner-item" target="_blank" href={item.link}>
-                    <img src={item.url} className="swiper-lazy" />
-                    <div className="swiper-lazy-preloader"></div>
-                  </a>
-                </For>
+                {_.map(bannerData, (item) => {
+                  return (
+                    <a
+                      key={item.id}
+                      className={styles['banner-item']}
+                      target="_blank"
+                      href={item.link}
+                      rel="noreferrer"
+                    >
+                      <LazyImg
+                        src={item.url}
+                        className={styles['swiper-lazy']}
+                        width={830}
+                        height={400}
+                        alt={item.title}
+                      />
+                      <div className={styles['swiper-lazy-preloader']} />
+                    </a>
+                  );
+                })}
               </Carousel>
 
-              {/* 左右切换，小于一张隐藏 */}
-              <If condition={bannerData.length > 1}>
-                <span className={classnames('slide-btn left-btn')} onClick={() => bannerRef.current.prev()}>
-                  <LeftOutlined />
-                </span>
-                <span className={classnames('slide-btn right-btn')} onClick={() => bannerRef.current.next()}>
-                  <RightOutlined />
-                </span>
-              </If>
+              {_.isEmpty(bannerData) ? null : (
+                <>
+                  <span
+                    className={classnames(styles['slide-btn'], styles['left-btn'])}
+                    onClick={() => bannerRef.current.prev()}
+                  >
+                    <LeftOutlined />
+                  </span>
+                  <span
+                    className={classnames(styles['slide-btn'], styles['right-btn'])}
+                    onClick={() => bannerRef.current.next()}
+                  >
+                    <RightOutlined />
+                  </span>
+                </>
+              )}
             </div>
           </Col>
 
-          <Col xs={24} sm={24} md={7} className="right">
-            <For each="item" of={rightBanner}>
-              <a key={index} className={classnames("img-focus banner-item ")} target="_blank" href={item.link}>
-                <LazyImg src={item.url} params="?imageView2/1/w/350/h/190" alt={item.title} />
-                <span className="banner-text">{item.title}</span>
-              </a>
-            </For>
+          <Col xs={24} sm={24} md={7} className={styles['right']}>
+            {_.map(rightBanner, (item) => {
+              return (
+                <a
+                  key={item.id}
+                  className={classnames(styles['img-focus'], styles['banner-item'])}
+                  target="_blank"
+                  href={item.link}
+                  rel="noreferrer"
+                >
+                  <LazyImg
+                    src={item.url}
+                    width={350}
+                    height={180}
+                    alt={item.title}
+                  />
+                  <span className={styles['banner-text']}>{item.title}</span>
+                </a>
+              );
+            })}
           </Col>
-
         </Row>
 
-        <div className={classnames('wrap content-box')}>
+        <div className={classnames('wrap', styles['content-box'])}>
           <Row>
-            {/* 列表 */}
-            <Col xs={24} sm={24} md={24} lg={18} xl={18} id='left-box'>
-              <div className={classnames('list-nav')}>
-                <Card
-                  bordered={false}
-                  tabList={operationTabList}
-                  activeTabKey={tabKey}
-                  onTabChange={tabKeyChang}
-                >
-                  <ArticeList
-                    loadMore={loadMore}
-                    isNoData={isNoData}
-                    typeTag
-                    loading={props.listLoading}
-                    data={articleList}
-                  />
-                </Card>
-              </div>
-            </Col>
-
-            <Col xs={0} sm={0} md={0} lg={6} xl={6}>
-              {/* 正能量位 */}
-              <If condition={energyData.imgurl}>
-                <Card
-                  style={{ marginBottom: 24 }}
-                  bordered={false}
-                >
-                  <p style={{ fontWeight: 'bold' }}>每日一句</p>
-                  <div style={{minHeight: 120}}>
-                    <LazyImg src={energyData.imgurl} />
+            <Col xs={24} sm={24} md={24} lg={18} xl={18}
+              className={styles['left-box']}
+            >
+              <PageLeftCard
+                bordered={false}
+                sortFn={sortChang}
+                title={
+                  <div className={styles['list-title']}>
+                    <SvgIcon name="iconrizhi1" style={{ fontSize: 24 }} />
+                      满分作文
                   </div>
-                  <div style={{ textIndent: '2em', marginTop: 10 }}>{energyData.ciba}</div>
+                }
+              >
+                <ArticleList
+                  loadMore={loadMore}
+                  isNoData={isNoData}
+                  typeTag
+                  loading={props.listLoading}
+                  data={articleList}
+                />
+              </PageLeftCard>
+            </Col>
+            <Col xs={0} sm={0} md={0} lg={6} xl={6}>
+              {energyData.imgUrl ? (
+                <Card className={styles['every-day-one']} bordered={false}>
+                  <p className={styles['one-title']}>
+                    <SvgIcon name="iconbianqian" />
+                    每日鸡汤
+                  </p>
+                  <div style={{ height: 140 }}>
+                    <LazyImg
+                      width={200}
+                      height={120}
+                      background
+                      alt={'每日鸡汤'}
+                      src={energyData?.imgUrl}
+                    />
+                  </div>
+                  <div id="energy">{energyData?.note}</div>
                 </Card>
-              </If>
+              ) : null}
 
-              {/* up信息列表 */}
-              <Card bordered={false} >
-                <p style={{ fontWeight: 'bold', textAlign: 'left' }}>优秀博主</p>
-                <Carousel autoplay {...swiperOption} className="up-info">
-                  <For each="item" of={upList}>
-                    <div key={item.id}>
-                      <UpInfo data={item} link />
-                    </div>
-                  </For>
+              <Card bordered={false} className={styles['hot-up-box']}>
+                <p className={styles['up-title']}>
+                  <SvgIcon name="iconxunzhang" />
+                  整活UP
+                </p>
+                <Carousel autoplay {...swipeOption} className={styles['up-info']}>
+                  {_.map(upList, (item) => {
+                    return (
+                      <div key={item.id}>
+                        <UpInfo data={item} link />
+                      </div>
+                    );
+                  })}
                 </Carousel>
               </Card>
 
-              {/* 广告位 */}
-              <For each="item" of={advert}>
-                <Card
-                  style={{ marginTop: 24 }}
-                  bordered={false}
-                  key={item.id}
-                >
-                  <p style={{ fontWeight: 'bold' }}>广告</p>
-                  <a href={item.link} style={{minHeight: 120, display: 'block'}}>
-                    <LazyImg src={item.url} params="?imageslim" />
-                  </a>
-                </Card>
-              </For>
-
+              <Advert data={advert} style={{ marginTop: 24 }} />
             </Col>
           </Row>
         </div>
       </>
     </>
-  )
-}
+  );
+};
 
-export async function getServerSideProps() {
-
-  // getBannerList
+export async function getServerSideProps () {
   const promise = new Promise((resolve) => {
-    request(serviceApi.getBannerList, {
-      method: 'get',
+    request(serviceApi.getHomeBannerList, {
+      method: 'get'
     }).then((res) => {
-      resolve(res ? res.data : [])
-    })
-  })
+      resolve(res?.data || null);
+    });
+  });
 
   // 最新
   const promise1 = new Promise((resolve) => {
-    request(serviceApi.getArticleList, {
-      method: 'get',
-      params: { id: 0, page: 1, limit: 5 }
+    baseQueryList(serviceApi.getArticleList, {
+      filters: {
+        status: _.get(dict, 'commonStatus.yes'),
+        state: _.get(dict, 'commonStatus.yes')
+      },
+      limit: 5
     }).then((res) => {
-      resolve(res ? res.data : [])
-    })
-  })
+      resolve(res?.data?.list || null);
+    });
+  });
 
-  // up列表
+  // up列表 粉丝前5
   const promise2 = new Promise((resolve) => {
-    request(serviceApi.getUserList, {
-      method: 'get',
-    }).then((res) => {
-      resolve(res ? res.data : [])
-    })
-  })
+    request(serviceApi.getHotUserList).then((res) => {
+      resolve(res?.data || null);
+    });
+  });
 
   // 金山每日一句正能量
   const promise3 = new Promise((resolve) => {
-    request(serviceApi.getYitu, {
-      method: 'get',
-    }).then((res) => {
-      resolve({
-        imgurl: res.data.picture,
-        ciba: res.data.note,
+    request(serviceApi.getYitu)
+      .then((res) => {
+        resolve({
+          imgUrl: res?.data?.picture,
+          note: res?.data?.note
+        });
       })
-    }).catch((err) => {
-      resolve({
-        imgurl: '//cdn.lululuting.com/api_err_img.png',
-        ciba: '快去告诉挺哥，每日一句的接口炸了！'
-      })
-    })
-  })
+      .catch(() => {
+        resolve({
+          imgUrl: '//cdn.lululuting.com/api_err_img.png',
+          note: '快去告诉挺哥，每日一句的接口炸了！'
+        });
+      });
+  });
+  let bannerList = await promise;
+  let articleList = await promise1;
+  let userList = await promise2;
+  let energy = await promise3;
 
-  let banenrList = await promise
-  let list = await promise1
-  let userList = await promise2
-  let energy = await promise3
-
-  return { props: { banenrList, list, userList, energy } }
+  return { props: { bannerList, articleList, userList, energy } };
 }
 
 const stateToProps = (state) => {
   return {
     listLoading: state.getArticleListLoading
-  }
-}
+  };
+};
 
-
-export default connect(stateToProps, null)(Home)
+export default connect(stateToProps, null)(Home);
