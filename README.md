@@ -9,7 +9,7 @@ tgbk 项目为 `主站`和`接口服务` 这个两个。
 
 ## 网站效果截图
 
-![cover](http://cdn.lululuting.com/upic/WX20210321-182555@2x.png](https://github.com/lululuting/pic/blob/master/preview/tgbk%E6%95%88%E6%9E%9C%E5%9B%BE.jpeg)
+![cover](https://github.com/lululuting/pic/blob/master/preview/tgbk%E6%95%88%E6%9E%9C%E5%9B%BE.jpeg)
 
 ### 目录架构
 
