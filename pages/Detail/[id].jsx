@@ -1,7 +1,7 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-20 10:27:47
- * @LastEditTime: 2024-04-11 13:02:44
+ * @LastEditTime: 2024-04-11 13:29:12
  * @LastEditors: TingGe
  * @Description: 详情页
  * @FilePath: /ting_ge_blog/pages/detail/[id].jsx
@@ -416,7 +416,7 @@ const Detail = (props) => {
                 <div id="preview"></div>
                 
                 {/* Vditor不支持ssr 出此下策，先渲染Markdown原文 让关键词能被搜索引擎收录 */}
-                <div style={{ height:0, opacity: 0 }}>{info.content}</div>
+                <div style={{ height:0, width: 0, overflow: 'hidden', opacity: 0 }}>{info.content}</div>
 
                 <Reward userId={info && info.userId ? info.userId : null} />
               </div>
