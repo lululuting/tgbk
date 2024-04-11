@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-01-01 22:41:54
  * @LastEditors: TingGe
- * @LastEditTime: 2023-08-15 11:05:00
+ * @LastEditTime: 2024-04-09 11:28:53
  * @FilePath: /ting_ge_blog/pages/articleAdd/index.jsx
  */
 import React from 'react';
@@ -90,7 +90,7 @@ class Article extends React.Component {
         enable: false
       },
       after: () => {
-        this.vditor?.setValue(content ? content : '');
+        this?.vditor?.setValue(content ? content : '');
       },
       toolbar: [
         'emoji',
@@ -386,7 +386,7 @@ class Article extends React.Component {
             >
               <FileUploader
                 mode="image"
-                accept=".jpg,.png,.jpeg,.gif"
+                accept=".jpg,.png,.jpeg,.gif,.heic,.mov"
                 multiple
                 maxLength={9}
                 onChange={this.imagesUploaderChange}

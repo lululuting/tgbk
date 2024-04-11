@@ -1,7 +1,7 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-15 09:51:42
- * @LastEditTime: 2023-06-06 11:01:19
+ * @LastEditTime: 2024-04-09 13:20:16
  * @LastEditors: TingGe
  * @Description: 通用列表组件 （后面越改越复杂 早知道就不用antd的list了，算了不想改了就这样吧）
  * @FilePath: /ting_ge_blog/components/ArticleList/index.jsx
@@ -19,6 +19,7 @@ import { dict } from '@/public/utils/dict';
 import { LikeOutlined, FireOutlined } from '@ant-design/icons';
 import { baseBatch } from '@/public/utils/baseRequest';
 import serviceApi from '@/config/service';
+import { Starport } from '@react-starport/core';
 import LazyImg from '../LazyImg';
 import MultilineText from '../MultilineText';
 import styles from './style.module.less';
@@ -136,12 +137,14 @@ const ArticleList = (props) => {
             extra={
               <Link href="/detail/[id]" as={`/detail/${item.id}`}>
                 <a className={classNames(styles['item-img'])}>
-                  <LazyImg
-                    src={item.cover}
-                    alt={item.title}
-                    width={260}
-                    height={165}
-                  />
+                  <Starport port={`detail-s-cover-${item.id}`}>
+                    <LazyImg
+                      src={item.cover}
+                      alt={item.title}
+                      width={260}
+                      height={165}
+                    />
+                  </Starport>
                 </a>
               </Link>
             }
@@ -166,7 +169,7 @@ const ArticleList = (props) => {
               }
               description={
                 <ul className={styles['item-tag-list']}>
-                  {!_.isEmpty(item.tags.split(',')) && _.map(item.tags.split(','), (item, index) => {
+                  {!_.isEmpty(item?.tags?.split(',')) && _.map(item?.tags && item.tags.split(',') || [], (item, index) => {
                     return (
                       <li className={styles['item-tag']} key={index}>
                         <span># </span>

@@ -1,7 +1,7 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-15 10:35:31
- * @LastEditTime: 2024-03-26 17:59:12
+ * @LastEditTime: 2024-04-09 11:22:03
  * @LastEditors: TingGe
  * @Description: 入口
  * @FilePath: /ting_ge_blog/pages/_app.js
@@ -23,6 +23,7 @@ import { baseQueryList } from '@/public/utils/baseRequest';
 import { ThemeProvider } from '@/components/Provider/themeToProvider';  
 import { loadStyles, loadScript, isLogin, memorial, consoleLogLogo, clickTextAnime  } from '@/public/utils/utils';
 import Layout from '@/components/Layout';
+import { StarportCarrier } from '@react-starport/core';
 // import config from '@/config';
 import 'nprogress/nprogress.css';
 import '../public/styles/global.css';
@@ -72,6 +73,11 @@ export default class MyApp extends App {
     // SmoothScroll 丝滑滚动插件 别人家的cdn可能会失效
     loadScript(
       'https://cdn.bootcdn.net/ajax/libs/smoothscroll/1.4.9/SmoothScroll.min.js',
+      () => {}
+    );
+    
+    loadScript(
+      'https://cdn.apple-livephotoskit.com/lpk/1/livephotoskit.js',
       () => {}
     );
 
@@ -175,25 +181,32 @@ export default class MyApp extends App {
 
     // 传递刷新方法
     pageProps.refreshApp = this.refreshApp;
+
+    const options = {
+      duration: 700,
+      easing: 'cubic-bezier(0.45, 0, 0.55, 1)',
+    }
     return (
       <Provider store={store}>
-        <ThemeProvider>
-          {Component.noLayout ? (
-              <Component {...pageProps} />
-          ) : (
-            <Layout refreshApp={this.refreshApp}>
-              <>
-                {AdminLayout ? (
-                    <AdminLayout>
+        <StarportCarrier {...options}>
+          <ThemeProvider>
+            {Component.noLayout ? (
+                <Component {...pageProps} />
+            ) : (
+              <Layout refreshApp={this.refreshApp}>
+                <>
+                  {AdminLayout ? (
+                      <AdminLayout>
+                        <Component {...pageProps} />
+                      </AdminLayout>
+                  ) : (
                       <Component {...pageProps} />
-                    </AdminLayout>
-                ) : (
-                    <Component {...pageProps} />
-                )}
-              </>
-            </Layout>
-          )}
-        </ThemeProvider>
+                  )}
+                </>
+              </Layout>
+            )}
+          </ThemeProvider>
+        </StarportCarrier>
       </Provider>
     );
   }

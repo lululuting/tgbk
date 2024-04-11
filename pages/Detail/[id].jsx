@@ -1,7 +1,7 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-20 10:27:47
- * @LastEditTime: 2023-06-14 15:16:26
+ * @LastEditTime: 2024-04-11 13:02:44
  * @LastEditors: TingGe
  * @Description: 详情页
  * @FilePath: /ting_ge_blog/pages/detail/[id].jsx
@@ -33,7 +33,8 @@ import { isLogin } from '@/public/utils/utils';
 import Reward from '@/components/Reward';
 import LazyImg from '@/components/LazyImg';
 import { PhotoSlider } from 'react-photo-view';
-import Vditor from 'vditor';
+import Vditor from 'vditor/dist/method.min';
+import { Starport } from '@react-starport/core';
 import Router from 'next/router';
 import {
   ProfileOutlined,
@@ -48,7 +49,6 @@ import styles from './style.module.less';
 import 'vditor/dist/index.css';
 import 'react-photo-view/dist/index.css';
 
-moment.locale('zh-cn');
 
 const Comment = dynamic(import("./comment"), { ssr: false });
 const { Title } = Typography;
@@ -61,6 +61,7 @@ const Detail = (props) => {
   const [visible, setVisible] = React.useState(false);
   const [photoIndex, setPhotoIndex] = React.useState(0);
   const [photoImages, setPhotoImages] = React.useState([]);
+  const [createTime, setCreateTime] = React.useState('');
 
   // 预览图片插件 marked.renderer return是字符串 好像没法用jsx。 只想到挂到window这种笨方法。
   if (process.browser) {
@@ -208,6 +209,8 @@ const Detail = (props) => {
           Vditor.codeRender(previewElement);
         }
       });
+      
+      setCreateTime(moment(info.createTime).startOf('hour').fromNow())
     }
 
     // 浏览量规则 30分钟内算一次浏览量（不严谨仅前端处理）
@@ -260,10 +263,11 @@ const Detail = (props) => {
           <div className={styles['b-cover']}>
             <LazyImg background params="?imageslim" src={info?.cover} />
           </div>
-
-          <div className={styles['s-cover']}>
-            <LazyImg background params="?imageslim" src={info?.cover} />
-          </div>
+            <div className={styles['s-cover-box']}>
+              <Starport port={`detail-s-cover-${info.id}`}>
+                <LazyImg className={styles['s-cover']} width={400} height={270} params="?imageslim" src={info?.cover} />
+              </Starport>
+            </div>
         </div>
 
         <div className={styles['info']}>
@@ -287,7 +291,7 @@ const Detail = (props) => {
               </div>
             </Link>
             <Divider type="vertical" />
-            {moment(info.createTime).startOf('hour').fromNow()}
+            {createTime}
             <Divider type="vertical" />
             阅读 {info.viewCount}
             <Divider type="vertical" />
@@ -410,6 +414,9 @@ const Detail = (props) => {
               <div className={styles['detailed-content']}>
                 {/* <div dangerouslySetInnerHTML={{ __html: parser(html) }} ></div> */}
                 <div id="preview"></div>
+                
+                {/* Vditor不支持ssr 出此下策，先渲染Markdown原文 让关键词能被搜索引擎收录 */}
+                <div style={{ height:0, opacity: 0 }}>{info.content}</div>
 
                 <Reward userId={info && info.userId ? info.userId : null} />
               </div>

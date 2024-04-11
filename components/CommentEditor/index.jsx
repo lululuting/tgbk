@@ -10,7 +10,6 @@ import theStore from 'store';
 import { Popover, Avatar, Button, Input, message } from 'antd';
 import { Comment } from '@ant-design/compatible';
 import LazyImg from '@/components/LazyImg';
-import { AntConfigProvider } from '@/pages/_app';
 import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart';
 import { SmileOutlined } from '@ant-design/icons';
@@ -159,46 +158,44 @@ export const ReplyEditor = ({ props, onSubmit }) => {
 
   return (
     <div className={styles['reply-editor-box']}>
-      <AntConfigProvider>
+      <Input
+        ref={inputRef}
+        suffix={selectEmoji}
+        placeholder={`回复 ${props.userName || props.visitorName + '（网友）'}`}
+        onChange={(e)=>setContent(e.target.value)}
+        value={content}
+      />
+
+      <div className={styles['verify-box']} style={{ marginLeft: 10 }}>
         <Input
-          ref={inputRef}
-          suffix={selectEmoji}
-          placeholder={`回复 ${props.userName || props.visitorName + '（网友）'}`}
-          onChange={(e)=>setContent(e.target.value)}
-          value={content}
+          style={{ width: 100 }}
+          placeholder="验证码"
+          onChange={(e)=>setCode(e.target.value)}
+          value={code}
         />
-
-        <div className={styles['verify-box']} style={{ marginLeft: 10 }}>
-          <Input
-            style={{ width: 100 }}
-            placeholder="验证码"
-            onChange={(e)=>setCode(e.target.value)}
-            value={code}
+        <div style={{ position: 'relative', width: 100 }}>
+          <img
+            style={{ width: 100, height: 32, cursor: 'pointer' }}
+            src={verifyCode}
+            alt={'看不清？点击刷新'}
+            onClick={() =>
+              setVerifyCode('/default/getVerify?mt=' + Math.random())
+            }
           />
-          <div style={{ position: 'relative', width: 100 }}>
-            <img
-              style={{ width: 100, height: 32, cursor: 'pointer' }}
-              src={verifyCode}
-              alt={'看不清？点击刷新'}
-              onClick={() =>
-                setVerifyCode('/default/getVerify?mt=' + Math.random())
-              }
-            />
-          </div>
         </div>
+      </div>
 
-        <Button
-        // style={!content.trim() || !code ? {opacity: 0.5} : null}
-          className={styles['reply-btn']}
-          htmlType="submit"
-          loading={false}
-          onClick={replySubmit}
-          type="primary"
-          disabled={!code || !content.trim()}
-        >
-        发布
-        </Button>
-      </AntConfigProvider>
+      <Button
+      // style={!content.trim() || !code ? {opacity: 0.5} : null}
+        className={styles['reply-btn']}
+        htmlType="submit"
+        loading={false}
+        onClick={replySubmit}
+        type="primary"
+        disabled={!code || !content.trim()}
+      >
+      发布
+      </Button>
     </div>
   );
 };

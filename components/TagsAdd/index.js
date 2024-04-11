@@ -26,6 +26,9 @@ export default class TagsAdd extends React.Component {
       PropTypes.string
     ]),
 
+    /** 是否返回字符串格式数据*/
+    isReturnStr: PropTypes.bool,
+
     /** onChange  */
     onChange: PropTypes.func,
 
@@ -39,6 +42,7 @@ export default class TagsAdd extends React.Component {
   static defaultProps = {
     value: [],
     isEdit: true,
+    isReturnStr: true,
     longTagLength: 20
   };
 
@@ -90,7 +94,7 @@ export default class TagsAdd extends React.Component {
       },
       () => {
         if (this.props.onChange) {
-          this.props.onChange(this.state.tags);
+          this.props.onChange( this.props.isReturnStr ? this.state.tags.join(',') : this.state.tags);
         }
       }
     );

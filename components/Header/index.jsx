@@ -1,7 +1,7 @@
 /*
  * @Author: TingGe
  * @Date: 2021-01-15 09:51:42
- * @LastEditTime: 2024-03-26 17:52:21
+ * @LastEditTime: 2024-04-11 13:19:58
  * @LastEditors: TingGe
  * @Description: 公用头部
  * @FilePath: /ting_ge_blog/components/Header/index.jsx
@@ -512,15 +512,14 @@ const Header = (props) => {
 
                     <ul className={styles['user-options']}>
                       <li onClick={() => linkUser(userInfo.userId)}>
-                        <SvgIcon name="icongerenziliao1" />
-                        个人中心
+                        <SvgIcon name="icongerenziliao1" />个人中心
                       </li>
 
                       <li
                         className={styles['user-msg']}
                         onClick={() => Router.push('/msgCenter')}
                       >
-                        <SvgIcon name="icontonggao" /> 我的信息
+                        <SvgIcon name="icontonggao" />我的信息
                         <span className={styles['msg-num']}>
                           <Badge
                             count={msgData && msgData.length}
@@ -535,11 +534,11 @@ const Header = (props) => {
                       {
                         props.userInfo.auth * 1 === _.get(dict, 'auth.super')
                           ? <li onClick={() => window.open('/admin')}>
-                            <SvgIcon name="iconxitongshezhi" /> 管理后台
+                            <SvgIcon name="iconxitongshezhi" />管理后台
                           </li> : null
                       }
                       <li onClick={logout}>
-                        <SvgIcon name="iconshouhou" /> 退出
+                        <SvgIcon name="iconshouhou" />退出
                       </li>
                     </ul>
                   </div>
