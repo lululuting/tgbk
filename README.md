@@ -2,7 +2,7 @@
 
 tgbk 项目为 `主站`和`接口服务` 这个两个。
 
-前台项目 技术栈为 `react` + `antd5` + `nextJS13x` + `react-redux` ssr 服务端渲染
+前台项目 技术栈为 `react` + `antd5` + `nextJS12x` + `react-redux` ssr 服务端渲染
 静态资源 采用 `七牛云cdn`进行加速
 网友登录 采用`微博sdk`进行授权注册登录
 [线上地址](http://lululuting.com "线上地址")
